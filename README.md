@@ -2,8 +2,4 @@
 
 ### TODO
 
-- babeljs
-- eslint
-- jest
-
 #
