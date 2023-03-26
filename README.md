@@ -1,5 +1,9 @@
 #
 
-### lol
+### TODO
+
+- babeljs
+- eslint
+- jest
 
 #
