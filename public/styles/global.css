@@ -22,4 +22,8 @@ html {
 body {
 	margin: 0 auto;
 	text-align: center;
+	user-select: none;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
 }
