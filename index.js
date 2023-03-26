@@ -22,6 +22,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-	if (!process.env.PORT) console.error(`error`.red);
+	if (!process.env.PORT) return console.error(`error`.red);
 	console.debug(`SERVER STARTED ON PORT: ${PORT}`.toLowerCase().rainbow);
 });
