@@ -7,3 +7,16 @@ html {
 	font-style: normal;
 	font-weight: 500;
 }
+
+*,
+*::before,
+*::after {
+	box-sizing: inherit;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0 auto;
+	text-align: center;
+}
