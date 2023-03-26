@@ -12,8 +12,13 @@ app.set('view engine', 'ejs');
 app.engine('ejs', ejs.__express);
 
 app.get('/', (req, res) => {
-	res.render('index', { title: 'Home' });
-	res.status(200);
+	res.render('index');
+	// res.sendStatus(200);
+});
+
+app.get('*', (req, res) => {
+	res.render('404');
+	// res.sendStatus(404);
 });
 
 app.listen(PORT, () => {
