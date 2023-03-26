@@ -1,7 +1,7 @@
 {
 	"name": "Music List",
-	"version": "1.2.2",
-	"description": "Music List with spotify api",
+	"version": "1.0.1",
+	"description": "NoDMCA music-list with spotify api",
 	"keywords": [
 		"ejs",
 		"spotify",
