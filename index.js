@@ -18,12 +18,12 @@ app.use(express.static(__dirname))
 
 app.get('/', (req, res) => {
 	res.render('index');
-	// res.sendStatus(200);
+  res.sendStatus = 200;
 });
 
 app.get('*', (req, res) => {
 	res.render('404');
-	// res.sendStatus(404);
+  res.sendStatus = 404;
 });
 
 app.listen(PORT, () => {

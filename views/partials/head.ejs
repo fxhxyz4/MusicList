@@ -1,6 +1,7 @@
 <%
 	let link = `https://fxhxyz4.github.io/MusicList/`;
 	let desc = `NoDMCA music-list with spotify api`;
+	let favicon_path = `./public/images/favicon.ico`
 	let title = `MusicList`
 %>
 
@@ -13,13 +14,13 @@
 	<meta name="author" content="fxhxyz" />
 	<meta name="description" content="<%- desc -%>" />
 	<meta name="keywords" content="Music, css, ejs, js, expressjs, spotify-api, spotify, nodmca" />
-	<meta name="image" content="./public/img/favicon.ico" />
+	<meta name="image" content="<%- favicon_path -%>" />
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="format-detection" content="address=no" />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="Music List" />
 	<meta property="og:description" content="<%- desc -%>" />
-	<meta property="og:image" content="./public/img/favicon.ico" />
+	<meta property="og:image" content="<%- favicon_path -%>" />
 	<meta property="og:image:alt" content="chatting" />
 	<meta property="og:url" content="<%- link -%>" />
 	<meta name="robots" content="index" />
@@ -38,7 +39,7 @@
 	<!-- /Css -->
 
 	<!-- Title and favicon -->
-	<link type="image/x-icon" rel="shortcut icon" href="./public/img/favicon.ico" />
+	<link type="image/x-icon" rel="shortcut icon" href="<%- favicon_path -%>" />
 	<title><%- title -%></title>
 	<!-- /Title and favicon -->
 </head>
