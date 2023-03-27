@@ -20,10 +20,26 @@ html {
 }
 
 body {
+	width: 100vw;
+	height: 100vh;
 	margin: 0 auto;
 	text-align: center;
 	user-select: none;
 	-ms-user-select: none;
 	-moz-user-select: none;
 	-webkit-user-select: none;
+}
+
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+main {
+	flex-grow: 1;
+}
+
+footer {
+	flex-shrink: 0;
 }
