@@ -10,7 +10,7 @@
 	],
 	"author": "fxhxyz <fxhxyz@proton.me> (https://fxhxyz.vercel.app/)",
 	"homepage": "https://fxhxyz.vercel.app/",
-	"bugs": "https://github.com/fxhxyz4/Music-List/issues",
+	"bugs": "https://github.com/fxhxyz4/MusicList/issues",
 	"scripts": {
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js"
