@@ -1,3 +1,9 @@
+<%
+	let link = `https://fxhxyz4.github.io/MusicList/`;
+	let desc = `NoDMCA music-list with spotify api`;
+	let title = `Music List`
+%>
+
 <head>
 	<!-- Meta -->
 	<meta charset="UTF-8" />
@@ -5,24 +11,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="title" content="Music List" />
 	<meta name="author" content="fxhxyz" />
-	<meta name="description" content="NoDMCA music-list with spotify api" />
+	<meta name="description" content="<%- desc -%>" />
 	<meta name="keywords" content="Music, css, ejs, js, expressjs, spotify-api, spotify, nodmca" />
 	<meta name="image" content="./public/img/favicon.ico" />
 	<meta name="format-detection" content="telephone=no" />
 	<meta name="format-detection" content="address=no" />
 	<meta property="og:type" content="website" />
 	<meta property="og:title" content="Music List" />
-	<meta property="og:description" content="NoDMCA music-list with spotify api" />
-	<meta property="og:image" content="../public/img/favicon.ico" />
+	<meta property="og:description" content="<%- desc -%>" />
+	<meta property="og:image" content="./public/img/favicon.ico" />
 	<meta property="og:image:alt" content="chatting" />
-	<meta property="og:url" content="https://fxhxyz4.github.io/random-pasta/" />
+	<meta property="og:url" content="<%- link -%>" />
 	<meta name="robots" content="index" />
 	<!-- /Meta -->
 
 	<!-- Link -->
-	<link rel="canonical" href="https://fxhxyz4.github.io/random-pasta/" />
-	<link rel="preconnect" href="https://fxhxyz4.github.io/random-pasta/" />
-	<link rel="prerender" href="https://fxhxyz4.github.io/random-pasta/" />
+	<link rel="canonical" href="<%- link -%>" />
+	<link rel="preconnect" href="<%- link -%>" />
+	<link rel="prerender" href="<%- link -%>" />
 	<link rel="preload" href="./public/styles/global.css" as="style" />
 	<!-- /Link -->
 
@@ -33,6 +39,6 @@
 
 	<!-- Title and favicon -->
 	<link type="image/x-icon" rel="shortcut icon" href="./public/img/favicon.ico" />
-	<title>Music List</title>
+	<title><%- title -%></title>
 	<!-- /Title and favicon -->
 </head>

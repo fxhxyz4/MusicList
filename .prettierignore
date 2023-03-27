@@ -1,2 +1,2 @@
-views/404.ejs
+views/**/*.ejs
 index.js
