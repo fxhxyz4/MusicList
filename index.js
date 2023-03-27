@@ -1,12 +1,16 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
-const express = require('express');
-const colors = require('colors');
-const path = require('path');
-const ejs = require('ejs');
+import express from 'express';
+import colors from 'colors';
+import path from 'path';
+import ejs from 'ejs';
 
 const PORT = process.env.PORT || 3939;
 const app = express();
+
+const public_path = `./public`
+const __dirname = path.dirname(public_path);
 
 app.set('view engine', 'ejs');
 app.engine('ejs', ejs.__express);
@@ -23,6 +27,6 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-	if (!process.env.PORT) return console.error(`error`.red);
+	if (!process.env.PORT) return console.error(`error, incorrect port`.red);
 	console.debug(`SERVER STARTED ON PORT: ${PORT}`.toLowerCase().rainbow);
 });

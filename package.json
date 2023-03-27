@@ -8,6 +8,7 @@
 		"express",
 		"javascript"
 	],
+	"type": "module",
 	"author": "fxhxyz <fxhxyz@proton.me> (https://fxhxyz.vercel.app/)",
 	"homepage": "https://fxhxyz.vercel.app/",
 	"bugs": "https://github.com/fxhxyz4/MusicList/issues",
