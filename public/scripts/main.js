@@ -8,5 +8,5 @@ refs.formEl.addEventListener('submit', e => {
 });
 
 refs.loginBtn.addEventListener('click', () => {
-  console.log(1)
+  window.open('/auth');
 });
