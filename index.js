@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
   res.sendStatus = 200;
 });
 
+app.post('/', (req, res) => {
+  console.log(req.body)
+})
+
 app.get('*', (req, res) => {
 	res.render('404');
   res.sendStatus = 404;
