@@ -1,4 +1,5 @@
 # misc
+public/styles/global.css
 .DS_Store
 package-lock.*
 
