@@ -1,7 +1,7 @@
 # misc
-public/styles/global.css
 .DS_Store
 package-lock.*
+public/styles/global.*
 
 # Logs
 logs
