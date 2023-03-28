@@ -9,7 +9,7 @@ import ejs from 'ejs';
 const PORT = process.env.PORT;
 const app = express();
 
-const public_path = `./public`
+const public_path = `./public/`
 const __dirname = path.dirname(public_path);
 
 app.set('view engine', 'ejs');
