@@ -1,9 +1,15 @@
+<%
+	let path = `../../public/images/symbol-defs.svg#`;
+%>
+
 <header class="header">
 	<nav class="navbar nav">
 		<div class="nav-logo">
-			<svg class="nav-logo__icon" width="" height="" aria-label="">
-				<use xlink:href=""></use>
-			</svg>
+			<a class="nav-logo__link" href="/">
+				<svg class="nav-logo__icon" width="40" height="40" aria-label="MusicList logo">
+					<use xlink:href="<%- path -%>icon-spotify"></use>
+				</svg>
+			</a>
 		</div>
 
 		<div class="nav-form">
@@ -14,8 +20,8 @@
 
 		<div class="nav-auth">
 			<a class="nav-auth__link" href="/">
-				<svg class="nav-auth__icon" width="" height="" aria-label="">
-					<use xlink:href=""></use>
+				<svg class="nav-auth__icon" width="30" height="30" aria-label="Twitch logo">
+					<use xlink:href="<%- path -%>icon-twitch"></use>
 				</svg>
 			</a>
 		</div>

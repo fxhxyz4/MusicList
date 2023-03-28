@@ -30,6 +30,29 @@ body {
 	-webkit-user-select: none;
 }
 
+ul {
+	list-style-type: none;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+	padding: 10px 10px;
+}
+
+.visually-hidden {
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	border: 0;
+	padding: 0;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	margin: -1px;
+}
+
 .wrapper {
 	display: flex;
 	flex-direction: column;
@@ -42,4 +65,14 @@ main {
 
 footer {
 	flex-shrink: 0;
+}
+
+.nav-logo__link::after {
+	content: 'MusicList';
+}
+.nav-auth__link::after {
+	content: 'Login with Twitch';
+}
+.nav-form__input::after {
+	content: './images/symbol-defs.svg#icon-search';
 }
