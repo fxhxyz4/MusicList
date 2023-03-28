@@ -13,7 +13,7 @@
 	"homepage": "https://fxhxyz.vercel.app/",
 	"bugs": "https://github.com/fxhxyz4/MusicList/issues",
 	"scripts": {
-		"dev": "nodemon index.js -- --config && npm run tailwind",
+		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
 		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css -w"
 	},

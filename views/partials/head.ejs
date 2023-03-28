@@ -1,8 +1,9 @@
 <%
 	let link = `https://fxhxyz4.github.io/MusicList/`;
 	let desc = `NoDMCA music-list with spotify api`;
-	let favicon_path = `./public/images/favicon.ico`
-	let title = `MusicList`
+	let favicon_path = `./public/images/favicon.ico`;
+	let css_path = `./public/styles/style.css`;
+	let title = `MusicList`;
 %>
 
 <head>
@@ -30,12 +31,12 @@
 	<link rel="canonical" href="<%- link -%>" />
 	<link rel="preconnect" href="<%- link -%>" />
 	<link rel="prerender" href="<%- link -%>" />
-	<link rel="preload" href="./public/styles/global.css" as="style" />
+	<link rel="preload" href="<%- css_path -%>" as="style" />
 	<!-- /Link -->
 
 	<!-- Css -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-	<link type="text/css" rel="stylesheet" href="./public/styles/global.css" />
+	<link type="text/css" rel="stylesheet" href="<%- css_path -%>" />
 	<!-- /Css -->
 
 	<!-- Title and favicon -->
