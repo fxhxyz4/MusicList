@@ -6,6 +6,7 @@
 		"ejs",
 		"spotify",
 		"express",
+		"passport",
 		"javascript"
 	],
 	"type": "module",
