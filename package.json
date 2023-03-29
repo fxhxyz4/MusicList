@@ -6,15 +6,16 @@
 		"ejs",
 		"spotify",
 		"express",
-		"javascript",
-		"type module"
+		"javascript"
 	],
+	"type": "module",
 	"author": "fxhxyz <fxhxyz@proton.me> (https://fxhxyz.vercel.app/)",
 	"homepage": "https://fxhxyz.vercel.app/",
 	"bugs": "https://github.com/fxhxyz4/MusicList/issues",
 	"scripts": {
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
+		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
 		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css -w"
 	},
 	"dependencies": {
@@ -22,11 +23,8 @@
 		"ejs": "^3.1.9",
 		"express": "^4.18.2",
 		"express-session": "^1.17.3",
-		"handlebars": "^4.7.7",
 		"passport": "^0.6.0",
-		"passport-oauth": "^1.0.0",
-		"passport-twitch-new": "^0.0.2",
-		"request": "^2.88.2"
+		"passport-oauth": "^1.0.0"
 	},
 	"devDependencies": {
 		"autoprefixer": "^10.4.14",
@@ -34,7 +32,6 @@
 		"nodemon": "^2.0.22",
 		"postcss": "^8.4.21",
 		"prettier": "^2.8.7",
-		"prettier-plugin-tailwindcss": "^0.2.5",
 		"tailwindcss": "^3.2.7"
 	}
 }

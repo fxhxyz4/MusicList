@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!-- head -->
+
+	<head>
+		<!-- Meta -->
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="title" content="Music List" />
+		<meta name="author" content="fxhxyz" />
+		<meta name="description" content="NoDMCA music-list with spotify api" />
+		<meta name="keywords" content="Music, css, ejs, js, expressjs, spotify-api, spotify, nodmca" />
+		<meta name="image" content="./public/images/favicon.ico" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="format-detection" content="address=no" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Music List" />
+		<meta property="og:description" content="NoDMCA music-list with spotify api" />
+		<meta property="og:image" content="./public/images/favicon.ico" />
+		<meta property="og:image:alt" content="chatting" />
+		<meta property="og:url" content="https://fxhxyz4.github.io/MusicList/" />
+		<meta name="robots" content="index" />
+		<!-- /Meta -->
+
+		<!-- Link -->
+		<link rel="canonical" href="https://fxhxyz4.github.io/MusicList/" />
+		<link rel="preconnect" href="https://fxhxyz4.github.io/MusicList/" />
+		<link rel="prerender" href="https://fxhxyz4.github.io/MusicList/" />
+		<link rel="preload" href="./public/styles/style.css" as="style" />
+		<!-- /Link -->
+
+		<!-- Css -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+		<link type="text/css" rel="stylesheet" href="./public/styles/style.css" />
+		<!-- /Css -->
+
+		<!-- Title and favicon -->
+		<link type="image/x-icon" rel="shortcut icon" href="./public/images/favicon.ico" />
+		<title>MusicList</title>
+		<!-- /Title and favicon -->
+	</head>
+	<!-- /head -->
+
+	<body>
+		<!-- noscript -->
+
+		<noscript>
+			<strong>We're sorry, but this site doesn't work properly without JavaScript enabled.</strong>
+		</noscript>
+		<!-- /noscript -->
+
+		<div class="wrapper">
+			<!-- header -->
+
+			<header class="header">
+				<nav class="navbar nav">
+					<div class="nav-logo">
+						<a class="nav-logo__link" href="/">
+							<svg class="nav-logo__icon" width="40" height="40" aria-label="MusicList logo">
+								<use xlink:href="../../public/images/symbol-defs.svg#icon-spotify"></use>
+							</svg>
+						</a>
+					</div>
+
+					<div class="nav-form">
+						<form class="nav-form__post" method="post" name="#" enctype="application/x-www-form-urlencoded">
+							<input class="nav-form__input" type="text" id="input" name="input" placeholder="Type to search..." autocomplete="off" />
+						</form>
+					</div>
+
+					<div class="nav-auth">
+						<button type="button" class="nav-auth__link">
+							<svg class="nav-auth__icon" width="30" height="30" aria-label="Twitch logo">
+								<use xlink:href="../../public/images/symbol-defs.svg#icon-twitch"></use>
+							</svg>
+						</button>
+					</div>
+				</nav>
+			</header>
+			<!-- /header -->
+
+			<!-- main -->
+
+			<main class="main">
+				<h1 class="visually-hidden main__title">NoDMCA music-list with spotify api</h1>
+				<ul class="main__list"></ul>
+			</main>
+			<!-- /main -->
+
+			<!-- footer -->
+			<footer class="footer">
+				<address class="footer__address">
+					<p class="footer__text">©2023 fxhxyz <span>fxhxyz@proton.me</span></p>
+				</address>
+			</footer>
+			<!-- /footer -->
+		</div>
+
+		<!-- scripts -->
+		<script src="./public/scripts/main.js" type="module"></script>
+		<!-- /scripts -->
+	</body>
+</html>

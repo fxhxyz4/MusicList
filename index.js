@@ -1,95 +1,35 @@
-require('dotenv').config();
-var express        = require('express');
-var session        = require('express-session');
-var passport       = require('passport');
-var OAuth2Strategy = require('passport-oauth').OAuth2Strategy;
-var request        = require('request');
-var handlebars     = require('handlebars');
+import dotenv from 'dotenv';
+dotenv.config();
 
-// Define our constants, you will change these with your own
-const TWITCH_CLIENT_ID = process.env.TWITCH_ID;
-const TWITCH_SECRET    = process.env.TWITCH_SECRET;
-const SESSION_SECRET   = process.env.SESSION_SECRET;
-const CALLBACK_URL     = process.env.CALLBACK_URL;  // You can run locally with - http://localhost:3000/auth/twitch/callback
+import express from 'express';
+import colors from 'colors';
+import path from 'path';
+import ejs from 'ejs';
 
-// Initialize Express and middlewares
-var app = express();
-app.use(session({secret: SESSION_SECRET, resave: false, saveUninitialized: false}));
-app.use(express.static('public'));
-app.use(passport.initialize());
-app.use(passport.session());
+const PORT = process.env.PORT;
+const app = express();
 
-// Override passport profile function to get user profile from Twitch API
-OAuth2Strategy.prototype.userProfile = function(accessToken, done) {
-  var options = {
-    url: 'https://api.twitch.tv/helix/users',
-    method: 'GET',
-    headers: {
-      'Client-ID': TWITCH_CLIENT_ID,
-      'Accept': 'application/vnd.twitchtv.v5+json',
-      'Authorization': 'Bearer ' + accessToken
-    }
-  };
+const public_path = `./public/`
+const __dirname = path.dirname(public_path);
 
-  request(options, function (error, response, body) {
-    if (response && response.statusCode == 200) {
-      done(null, JSON.parse(body));
-    } else {
-      done(JSON.parse(body));
-    }
-  });
-}
+app.set('view engine', 'ejs');
+app.engine('ejs', ejs.__express);
+app.use(express.static(__dirname))
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
+app.get('/', (req, res) => {
+	res.render('index');
+  res.sendStatus = 200;
 });
 
-passport.deserializeUser(function(user, done) {
-    done(null, user);
+app.post('/', (req, res) => {
+})
+
+app.get('*', (req, res) => {
+	res.render('404');
+  res.sendStatus = 404;
 });
 
-passport.use('twitch', new OAuth2Strategy({
-    authorizationURL: 'https://id.twitch.tv/oauth2/authorize',
-    tokenURL: 'https://id.twitch.tv/oauth2/token',
-    clientID: TWITCH_CLIENT_ID,
-    clientSecret: TWITCH_SECRET,
-    callbackURL: CALLBACK_URL,
-    state: true
-  },
-  function(accessToken, refreshToken, profile, done) {
-    profile.accessToken = accessToken;
-    profile.refreshToken = refreshToken;
-
-    done(null, profile);
-  }
-));
-
-// Set route to start OAuth link, this is where you define scopes to request
-app.get('/auth/twitch', passport.authenticate('twitch', { scope: 'user_read' }));
-
-// Set route for OAuth redirect
-app.get('/auth/twitch/callback', passport.authenticate('twitch', { successRedirect: '/', failureRedirect: '/' }));
-
-// Define a simple template to safely generate HTML with values from user's profile
-var template = handlebars.compile(`
-<html><head><title>Twitch Auth Sample</title></head>
-<table>
-    <tr><th>Access Token</th><td>{{accessToken}}</td></tr>
-    <tr><th>Refresh Token</th><td>{{refreshToken}}</td></tr>
-    <tr><th>Display Name</th><td>{{display_name}}</td></tr>
-    <tr><th>Bio</th><td>{{bio}}</td></tr>
-    <tr><th>Image</th><td>{{logo}}</td></tr>
-</table></html>`);
-
-// If user has an authenticated session, display it, otherwise display link to authenticate
-app.get('/', function (req, res) {
-  if(req.session && req.session.passport && req.session.passport.user) {
-    res.send(template(req.session.passport.user));
-  } else {
-    res.send('<html><head><title>Twitch Auth Sample</title></head><a href="/auth/twitch">login</a></html>');
-  }
-});
-
-app.listen(3000, function () {
-  console.log('Twitch auth sample listening on port 3000!')
+app.listen(PORT, () => {
+	if (process.env.PORT != 3939) return console.error(`[error] incorrect port`.red);
+	console.debug(`Server started on PORT: ${PORT}`.toLowerCase().rainbow);
 });
