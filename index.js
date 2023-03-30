@@ -37,7 +37,7 @@ app.use(express.static(__dirname));
 app.use('/', router)
 
 app.use('/auth/twitch', (req, res, next) => {
-  res.redirect(`${AUTH_URL}?response_type=code&redirect_uri=https%3A%2F%2Ffxhxyz.vercel.app&client_id=${TWITCH_ID}`)
+  res.redirect(`${AUTH_URL}?response_type=code&redirect_uri=https%3A%2F%2Fmusic-list-drab.vercel.app&client_id=${TWITCH_ID}`)
   next();
 });
 
