@@ -1,3 +1,4 @@
 views/**/*.ejs
 index.js
+routes/*.js
 tailwind.config.*
