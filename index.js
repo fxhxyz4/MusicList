@@ -45,7 +45,6 @@ app.get('*', (req, res) => {
   res.render('404')
 })
 
-
 app.listen(PORT, () => {
 	if (process.env.PORT != 3939) return console.error(`[error] incorrect port`.red);
 	return console.debug(`Server started on PORT: ${PORT}`.toLowerCase().rainbow);
