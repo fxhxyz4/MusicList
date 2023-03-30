@@ -1,6 +1,7 @@
 # misc
 .DS_Store
 package-lock.*
+vercel.json
 
 # Logs
 logs
