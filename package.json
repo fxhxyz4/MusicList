@@ -17,7 +17,7 @@
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
-		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css -w"
+		"css": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css -w"
 	},
 	"dependencies": {
 		"dotenv": "^16.0.3",
@@ -32,6 +32,7 @@
 		"colors": "^1.4.0",
 		"nodemon": "^2.0.22",
 		"postcss": "^8.4.21",
+		"postcss-cli": "^10.1.0",
 		"prettier": "^2.8.7",
 		"tailwindcss": "^3.2.7"
 	}

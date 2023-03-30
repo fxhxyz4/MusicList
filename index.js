@@ -31,5 +31,5 @@ app.get('*', (req, res) => {
 
 app.listen(PORT, () => {
 	if (process.env.PORT != 3939) return console.error(`[error] incorrect port`.red);
-	console.debug(`Server started on PORT: ${PORT}`.toLowerCase().rainbow);
+	return console.debug(`Server started on PORT: ${PORT}`.toLowerCase().rainbow);
 });
