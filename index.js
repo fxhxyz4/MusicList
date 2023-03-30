@@ -42,11 +42,8 @@ app.use(express.static(__dirname));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use('/', router)
-
-OAuth2Strategy.prototype.userProfile = function(accessToken, done) {
-  var options = {
+OAuth2Strategy.prototype.userProfile = (accessToken, done) => {
+  const options = {
     url: 'https://api.twitch.tv/helix/users',
     method: 'GET',
     headers: {
@@ -88,15 +85,18 @@ passport.use('twitch', new OAuth2Strategy({
   }
 ));
 
+// routes
 app.get('/auth/twitch',
-  passport.authenticate('twitch', { scope: 'user_read' })
+  passport.authenticate('twitch', { scope: SCOPE })
 );
 
 app.get('/auth/twitch/callback',
   passport.authenticate('twitch',
-    { successRedirect: '/', failureRedirect: '/' }
+    { successRedirect: '/', failureRedirect: './views/404.ejs' }
   )
 );
+
+app.use('/', router)
 
 app.listen(PORT, () => {
 	if (process.env.PORT != 3939) return console.error(`[error] incorrect port`.red);

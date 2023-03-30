@@ -17,7 +17,8 @@
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
-		"css": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css -w"
+		"css": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
+		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css -w"
 	},
 	"dependencies": {
 		"dotenv": "^16.0.3",
