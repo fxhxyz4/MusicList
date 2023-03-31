@@ -7,75 +7,78 @@
 */
 
 html {
-	box-sizing: border-box;
-	font-family: 'Roboto', sans-serif;
-	font-size: 20px;
-	font-style: normal;
-	font-weight: 500;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
 }
 
 *,
 *::before,
 *::after {
-	box-sizing: inherit;
-	margin: 0;
-	padding: 0;
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-	width: 100vw;
-	height: 100vh;
-	margin: 0 auto;
-	text-align: center;
-	user-select: none;
-	-ms-user-select: none;
-	-moz-user-select: none;
-	-webkit-user-select: none;
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  text-align: center;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 
 ul {
-	list-style-type: none;
+  list-style-type: none;
 }
 
 a {
-	text-decoration: none;
-	color: inherit;
-	padding: 10px 10px;
+  text-decoration: none;
+  color: inherit;
+  padding: 10px 10px;
 }
 
 .visually-hidden {
-	position: absolute;
-	white-space: nowrap;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-	border: 0;
-	padding: 0;
-	clip: rect(0 0 0 0);
-	clip-path: inset(50%);
-	margin: -1px;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  margin: -1px;
 }
 
 .wrapper {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
-	flex-grow: 1;
+  flex-grow: 1;
 }
 
 footer {
-	flex-shrink: 0;
+  flex-shrink: 0;
 }
 
 .nav-logo__link::after {
-	content: 'MusicList';
+  content: 'MusicList';
 }
+
 .nav-auth__link::after {
-	content: 'Login with Twitch';
+  content: 'Login with Twitch';
 }
+
 .nav-form__input::after {
-	content: './images/symbol-defs.svg#icon-search';
+  content: './images/symbol-defs.svg#icon-search';
 }

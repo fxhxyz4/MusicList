@@ -21,8 +21,8 @@
 		"prod": "npm run ejs && npm run tailwind:prod",
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
 		"postcss": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
-		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css -w",
-		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/style.css"
+		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w",
+		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
