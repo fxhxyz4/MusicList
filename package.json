@@ -1,20 +1,36 @@
 {
 	"name": "Music List",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "NoDMCA music-list with spotify api",
 	"keywords": [
 		"ejs",
-		"spotify",
+		"spotify-api",
 		"express",
 		"javascript",
 		"postcss",
 		"tailwind",
-		"babel"
+		"babel",
+		"webpack",
+		"cors"
 	],
 	"type": "module",
-	"author": "fxhxyz <fxhxyz@proton.me> (https://fxhxyz.vercel.app/)",
+	"author": {
+		"name": "fxhxyz4",
+		"email": "fxhxyz@proton.me",
+		"url": "https://fxhxyz.vercel.app/"
+	},
 	"homepage": "https://music-list-lol.onrender.com/",
 	"bugs": "https://github.com/fxhxyz4/MusicList/issues",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/fxhxyz4/musiclist.git"
+	},
+	"maintainers": [
+		{
+			"name": "fxhxyz4",
+			"email": "fxhxyz@proton.me"
+		}
+	],
 	"scripts": {
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
@@ -23,9 +39,10 @@
 		"babel:watch": "babel public/scripts/**/*.js -d public/out --presets=@babel/preset-env -w",
 		"postcss:watch": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
 		"tailwind:watch": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w",
-		"webpack": "webpack",
+		"webpack:watch": "webpack -c ./webpack.config.js -w",
 		"prod": "npm run ejs && npm run tailwind:prod && npm run css && npm run babel:prod",
 		"babel:prod": "babel public/scripts/**/*.js -d public/out --presets=@babel/preset-env",
+		"webpack:prod": "webpack -c ./webpack.config.js",
 		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css"
 	},
 	"dependencies": {
