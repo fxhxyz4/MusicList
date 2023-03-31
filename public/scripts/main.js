@@ -9,4 +9,5 @@ refs.formEl.addEventListener('submit', e => {
 
 refs.loginBtn.addEventListener('click', () => {
 	window.open('/auth/twitch');
+	console.log(1);
 });
