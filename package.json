@@ -11,7 +11,7 @@
 	],
 	"type": "module",
 	"author": "fxhxyz <fxhxyz@proton.me> (https://fxhxyz.vercel.app/)",
-	"homepage": "https://fxhxyz.vercel.app/",
+	"homepage": "https://music-list-lol.onrender.com/",
 	"bugs": "https://github.com/fxhxyz4/MusicList/issues",
 	"scripts": {
 		"dev": "nodemon index.js -- --config",

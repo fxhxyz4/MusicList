@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Host: https://music-list-drab.vercel.app/
-Sitemap: https://music-list-drab.vercel.app/sitemap.xml
+Host: https://music-list-lol.onrender.com
+Sitemap: https://music-list-lol.onrender.com/sitemap.xml
