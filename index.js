@@ -12,7 +12,7 @@ import router from './routes/router.js'
 
 const app = express();
 
-// .env config
+// dotenv config
 const SESSION_SECRET = process.env.SESSION_SECRET,
       TWITCH_ID = process.env.TWITCH_ID,
       AUTH_URL = process.env.AUTH_URL,
