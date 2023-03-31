@@ -1,6 +1,6 @@
 {
 	"name": "Music List",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"description": "NoDMCA music-list with spotify api",
 	"keywords": [
 		"ejs",
@@ -18,13 +18,15 @@
 	"scripts": {
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
-		"prod": "npm run ejs && npm run tailwind:prod && npm run css",
-		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css",
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
 		"css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
-		"babel": "babel public/scripts/**/*.js -d public/out",
-		"postcss": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
-		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w"
+		"babel:watch": "babel public/scripts/**/*.js -d public/out --presets=@babel/preset-env -w",
+		"postcss:watch": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
+		"tailwind:watch": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w",
+		"webpack": "webpack",
+		"prod": "npm run ejs && npm run tailwind:prod && npm run css && npm run babel:prod",
+		"babel:prod": "babel public/scripts/**/*.js -d public/out --presets=@babel/preset-env",
+		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
@@ -43,7 +45,9 @@
 		"postcss": "^8.4.21",
 		"postcss-cli": "^10.1.0",
 		"prettier": "^2.8.7",
-		"tailwindcss": "^3.2.7"
+		"tailwindcss": "^3.2.7",
+		"webpack": "^5.77.0",
+		"webpack-cli": "^5.0.1"
 	},
 	"engines": {
 		"node": "18.x"
