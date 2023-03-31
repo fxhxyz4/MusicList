@@ -1,8 +1,6 @@
 {
 	"version": 2,
 	"name": "music-list",
-	"cleanUrls": true,
-	"trailingSlash": false,
 	"devCommand": "npm run dev",
 	"installCommand": "npm install",
 	"builds": [
