@@ -1,7 +1,6 @@
 {
 	"version": 2,
 	"name": "music-list",
-	"public": true,
 	"cleanUrls": true,
 	"trailingSlash": false,
 	"devCommand": "npm run dev",
