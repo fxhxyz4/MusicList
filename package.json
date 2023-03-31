@@ -1,6 +1,6 @@
 {
 	"name": "Music List",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "NoDMCA music-list with spotify api",
 	"keywords": [
 		"ejs",
@@ -18,20 +18,25 @@
 	"scripts": {
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
-		"prod": "npm run ejs && npm run tailwind:prod",
+		"prod": "npm run ejs && npm run tailwind:prod && npm run css",
+		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css",
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
+		"css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
+		"babel": "babel public/scripts/**/*.js -d public/out",
 		"postcss": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
-		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w",
-		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css"
+		"tailwind": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
+		"css-minify": "^2.0.0",
 		"dotenv": "^16.0.3",
 		"ejs": "^3.1.9",
 		"express": "^4.18.2",
 		"express-session": "^1.17.3"
 	},
 	"devDependencies": {
+		"@babel/cli": "^7.21.0",
+		"@babel/core": "^7.21.4",
 		"autoprefixer": "^10.4.14",
 		"colors": "^1.4.0",
 		"nodemon": "^2.0.22",
