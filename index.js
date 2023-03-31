@@ -5,6 +5,7 @@ import session from 'express-session';
 import express from 'express';
 import colors from 'colors';
 import path from 'path';
+import cors from 'cors';
 import ejs from 'ejs';
 
 import router from './routes/router.js'
@@ -31,6 +32,7 @@ app.use(session
     saveUninitialized: false
   })
 );
+app.use(cors());
 app.use(express.static(__dirname));
 
 // routes
