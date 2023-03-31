@@ -40,8 +40,8 @@
 		"postcss:watch": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
 		"tailwind:watch": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w",
 		"webpack:watch": "webpack -c ./webpack.config.js -w",
-		"prod": "npm run ejs && npm run tailwind:prod && npm run css && npm run babel:prod",
-		"babel:prod": "babel public/scripts/**/*.js -d public/out --presets=@babel/preset-env",
+		"prod": "npm run ejs && npm run tailwind:prod && npm run css && npm run webpack:prod && npm run babel:prod",
+		"babel:prod": "babel public/out/*.js -d public/out --presets=@babel/preset-env",
 		"webpack:prod": "webpack -c ./webpack.config.js",
 		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css"
 	},
