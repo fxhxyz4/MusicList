@@ -1,8 +1,5 @@
 {
 	"version": 2,
-	"name": "music-list",
-	"devCommand": "npm run dev",
-	"installCommand": "npm install",
 	"builds": [
 		{
 			"src": "./index.js",
