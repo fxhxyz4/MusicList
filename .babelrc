@@ -3,8 +3,9 @@
 		[
 			"@babel/preset-env",
 			{
-				"modules": false,
 				"targets": {
+					"modules": "auto",
+					"corejs": "3.29",
 					"node": "18"
 				}
 			}

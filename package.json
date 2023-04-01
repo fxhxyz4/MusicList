@@ -36,7 +36,7 @@
 		"server": "node index.js",
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
 		"css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
-		"babel:watch": "babel public/scripts/**/*.js -d public/out --presets=@babel/preset-env -w",
+		"babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
 		"postcss:watch": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
 		"tailwind:watch": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w",
 		"webpack:watch": "webpack -c ./webpack.config.js -w",
