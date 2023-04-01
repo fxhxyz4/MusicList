@@ -3,6 +3,7 @@
 	let desc = `NoDMCA music-list with spotify api`;
 	let favicon_path = `../../public/images/favicon.ico`;
 	let css_path = `../../public/styles/global.css`;
+	let css_prod_path = `../../public/styles/global.min.css`;
 	let title = `MusicList`;
 
 	const keywords = [
@@ -37,11 +38,11 @@
 	<link rel="canonical" href="<%- link -%>" />
 	<link rel="preconnect" href="<%- link -%>" />
 	<link rel="prerender" href="<%- link -%>" />
-	<link rel="preload" href="<%- css_path -%>" as="style" />
+	<link rel="preload" href="<%- css_prod_path -%>" as="style" />
 	<!-- /Link -->
 
 	<!-- Css -->
-	<link type="text/css" rel="stylesheet" href="<%- css_path -%>" />
+	<link type="text/css" rel="stylesheet" href="<%- css_prod_path -%>" />
 	<!-- /Css -->
 
 	<!-- Title and favicon -->
