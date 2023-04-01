@@ -6,8 +6,6 @@ import input from './modules/input.js';
 
 const THROTTLE_MS = 90;
 
-console.log(SPOTIFY_SECRET, SPOTIFY_ID);
-
 refs.inputEl.addEventListener('input', throttle(input, THROTTLE_MS));
 
 refs.formEl.addEventListener('submit', e => {
