@@ -14,6 +14,8 @@ const app = express();
 
 // dotenv config
 const SESSION_SECRET = process.env.SESSION_SECRET,
+      SPOTIFY_SECRET = process.env.SPOTIFY_SECRET,
+	    SPOTIFY_ID = process.env.SPOTIFY_ID,
       TWITCH_ID = process.env.TWITCH_ID,
       AUTH_URL = process.env.AUTH_URL,
       PORT = process.env.PORT
@@ -23,6 +25,8 @@ const __dirname = path.dirname(public_path);
 
 app.set('view engine', 'ejs');
 app.engine('ejs', ejs.__express);
+
+// spotify
 
 // middlewares
 app.use(session
