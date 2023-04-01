@@ -7,8 +7,6 @@
 		"spotify-api",
 		"express",
 		"javascript",
-		"postcss",
-		"tailwind",
 		"babel",
 		"webpack",
 		"cors"
@@ -37,13 +35,10 @@
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
 		"css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
 		"babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
-		"postcss:watch": "postcss ./public/styles/global.css -o ./public/styles/style.css -w",
-		"tailwind:watch": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css -w",
 		"webpack:watch": "webpack -c ./webpack.config.js -w",
-		"prod": "npm run ejs && npm run tailwind:prod && npm run css && npm run webpack:prod && npm run babel:prod",
+		"prod": "npm run ejs && npm run css && npm run webpack:prod && npm run babel:prod",
 		"babel:prod": "babel public/out/*.js -d public/out --presets=@babel/preset-env",
-		"webpack:prod": "webpack -c ./webpack.config.js",
-		"tailwind:prod": "tailwindcss -i ./public/styles/global.css -o ./public/styles/global.css"
+		"webpack:prod": "webpack -c ./webpack.config.js"
 	},
 	"dependencies": {
 		"cors": "^2.8.5",
@@ -57,13 +52,9 @@
 		"@babel/cli": "^7.21.0",
 		"@babel/core": "^7.21.4",
 		"@babel/preset-env": "^7.21.4",
-		"autoprefixer": "^10.4.14",
 		"colors": "^1.4.0",
 		"nodemon": "^2.0.22",
-		"postcss": "^8.4.21",
-		"postcss-cli": "^10.1.0",
 		"prettier": "^2.8.7",
-		"tailwindcss": "^3.2.7",
 		"webpack": "^5.77.0",
 		"webpack-cli": "^5.0.1"
 	},
