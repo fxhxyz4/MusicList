@@ -1,6 +1,6 @@
 console.clear();
 
-import refs from './refs.js';
+import refs from './modules/refs.js';
 
 refs.formEl.addEventListener('submit', e => {
 	e.preventDefault();
