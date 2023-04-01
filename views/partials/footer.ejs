@@ -1,7 +1,12 @@
+<%
+	let today = new Date();
+	let date = today.getFullYear();
+%>
+
 <footer class="footer">
 	<div class="container">
 		<address class="footer__address">
-			<p class="footer__text">©2023 fxhxyz <span>fxhxyz@proton.me</span></p>
+			<p class="footer__text">&copy;<%- date -%> fxhxyz <a href="mailto:fxhxyz@proton.me">&#60;fxhxyz@proton.me&#62;</a></p>
 		</address>
 	</div>
 </footer>
