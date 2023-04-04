@@ -5,6 +5,7 @@ import refs from './modules/refs.js';
 import input from './modules/input.js';
 
 const THROTTLE_MS = 90;
+const TIMEOUT_MS = 3000;
 
 refs.inputEl.addEventListener('input', throttle(input, THROTTLE_MS));
 
@@ -16,4 +17,19 @@ refs.formEl.addEventListener('submit', e => {
 
 refs.loginBtn.addEventListener('click', () => {
 	window.open('/auth/twitch');
+
+	twitchLogin();
 });
+
+function twitchLogin() {
+	document.addEventListener('click', e => {
+		if (e.target.classList.contains('.js-authorize')) {
+			refs.loginBtn.textContent = `Logout`;
+			window.open('/');
+		}
+
+		const timeout = setTimeout(() => {
+			window.close();
+		}, TIMEOUT_MS * 1000);
+	});
+}

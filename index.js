@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config();
+  dotenv.config();
 
 import session from 'express-session';
 import express from 'express';
@@ -8,7 +8,7 @@ import path from 'path';
 import cors from 'cors';
 import ejs from 'ejs';
 
-import router from './routes/router.js'
+import router from './routes/router.js';
 
 const app = express();
 
@@ -40,16 +40,16 @@ app.use(cors());
 app.use(express.static(__dirname));
 
 // routes
-app.use('/', router)
+app.use('/', router);
 
 app.use('/auth/twitch', (req, res, next) => {
-  res.redirect(`${AUTH_URL}?response_type=code&redirect_uri=https%3A%2F%2Fmusic-list-lol.onrender.com/&client_id=${TWITCH_ID}`)
-  next();
+	res.redirect(`${AUTH_URL}?response_type=code&redirect_uri=https%3A%2F%2Fmusic-list-lol.onrender.com/&client_id=${TWITCH_ID}`);
+  // next();
 });
 
 app.get('*', (req, res) => {
-  res.render('404')
-})
+  res.render('404');
+});
 
 app.listen(PORT, () => {
 	if (process.env.PORT != 3939) return console.error(`[error] incorrect port`.red);
