@@ -18,18 +18,18 @@ refs.formEl.addEventListener('submit', e => {
 refs.loginBtn.addEventListener('click', () => {
 	window.open('/auth/twitch');
 
-	twitchLogin();
+	// twitchLogin();
 });
 
-function twitchLogin() {
-	document.addEventListener('click', e => {
-		if (e.target.classList.contains('.nav-auth__link')) {
-			refs.loginBtn.textContent = `Logout`;
-			window.open('/');
-		}
+// function twitchLogin() {
+// 	document.addEventListener('click', e => {
+// 		if (e.target.classList.contains('.nav-auth__link')) {
+// 			refs.loginBtn.textContent = `Logout`;
+// 			window.open('/');
+// 		}
 
-		const timeout = setTimeout(() => {
-			window.open('/');
-		}, TIMEOUT_MS * 1000);
-	});
-}
+// 		const timeout = setTimeout(() => {
+// 			window.open('/');
+// 		}, TIMEOUT_MS * 1000);
+// 	});
+// }
