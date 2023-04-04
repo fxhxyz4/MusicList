@@ -23,13 +23,13 @@ refs.loginBtn.addEventListener('click', () => {
 
 function twitchLogin() {
 	document.addEventListener('click', e => {
-		if (e.target.classList.contains('.js-authorize')) {
+		if (e.target.classList.contains('.nav-auth__link')) {
 			refs.loginBtn.textContent = `Logout`;
 			window.open('/');
 		}
 
 		const timeout = setTimeout(() => {
-			window.close();
+			window.open('/');
 		}, TIMEOUT_MS * 1000);
 	});
 }
