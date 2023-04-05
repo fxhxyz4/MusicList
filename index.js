@@ -15,11 +15,13 @@ const app = express();
 // dotenv config
 const SESSION_SECRET = process.env.SESSION_SECRET,
       SPOTIFY_SECRET = process.env.SPOTIFY_SECRET,
-	    SPOTIFY_ID = process.env.SPOTIFY_ID,
+      REDIRECT_URI  = process.env.REDIRECT_URI,
+      SPOTIFY_ID = process.env.SPOTIFY_ID,
       TWITCH_ID = process.env.TWITCH_ID,
       AUTH_URL = process.env.AUTH_URL,
       PORT = process.env.PORT
 
+const TWITCH_URL = `${AUTH_URL}?response_type=code&redirect_uri=${REDIRECT_URI}/&client_id=${TWITCH_ID}`
 const public_path = `./public/`;
 const __dirname = path.dirname(public_path);
 
@@ -43,7 +45,7 @@ app.use(express.static(__dirname));
 app.use('/', router);
 
 app.use('/auth/twitch', (req, res, next) => {
-	res.redirect(`${AUTH_URL}?response_type=code&redirect_uri=https%3A%2F%2Fmusic-list-lol.onrender.com/&client_id=${TWITCH_ID}`);
+	res.redirect(TWITCH_URL);
   next();
 });
 
