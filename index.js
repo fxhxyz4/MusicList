@@ -1,9 +1,7 @@
 import dotenv from 'dotenv';
   dotenv.config();
 
-import { OAuth2Strategy } from 'passport-oauth';
 import session from 'express-session';
-import passport from 'passport';
 import express from 'express';
 import colors from 'colors';
 import path from 'path';
@@ -31,7 +29,6 @@ app.engine('ejs', ejs.__express);
 // spotify
 
 // middlewares
-app.use(passport.initialize({}));
 app.use(session
   ({
     secret: SESSION_SECRET,
@@ -47,9 +44,6 @@ app.use('/', router);
 
 app.use('/auth/twitch', (req, res, next) => {
 	res.redirect(`${AUTH_URL}?response_type=code&redirect_uri=https%3A%2F%2Fmusic-list-lol.onrender.com/&client_id=${TWITCH_ID}`);
-  if(res?.type === "success") {
-    console.log(res)
-  }
   next();
 });
 
