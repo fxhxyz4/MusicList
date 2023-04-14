@@ -10,7 +10,7 @@
 
 #
 
-### Contributers:
+### Contributors:
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/fxhxyz4/MusicList)
 ![GitHub issues](https://img.shields.io/github/issues/fxhxyz4/MusicList)

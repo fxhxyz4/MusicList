@@ -12,6 +12,7 @@
 		"cors"
 	],
 	"type": "module",
+	"main": "index.js",
 	"author": {
 		"name": "fxhxyz4",
 		"email": "fxhxyz@proton.me",
