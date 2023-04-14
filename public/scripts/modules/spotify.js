@@ -1,4 +1,7 @@
 import refs from './refs.js';
+import license from '../../../license.json';
+
+const licenseArray = license.data;
 
 export async function searchSpotify(query) {
 	const token = '74e32fcef00f4917950e482de83f327d';
