@@ -1,5 +1,5 @@
 import refs from './refs.js';
-import license from '../../../license.json';
+import license from '../../../data.json';
 
 const licenseArray = license.data;
 
