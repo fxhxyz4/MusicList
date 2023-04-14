@@ -2,7 +2,7 @@
 
 ### ![GitHub package.json version (subfolder of monorepo)](https://img.shields.io/github/package-json/v/fxhxyz4/MusicList) ![GitHub](https://img.shields.io/github/license/fxhxyz4/MusicList) ![Website](https://img.shields.io/website?url=https%3A%2F%2Ffxhxyz4.github.io%2FMusicListr)
 
-![desktop.jpg](./assets/desktop.jpg)
+![desktop.jpg](./assets/Desktop.jpg)
 
 #
 
