@@ -37,7 +37,7 @@
 		"css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
 		"babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
 		"webpack:watch": "webpack -c ./webpack.config.js -w",
-		"prod": "npm run ejs && npm run css && npm run webpack:prod && npm run babel:prod",
+		"prod": "npm run css && npm run webpack:prod && npm run babel:prod",
 		"babel:prod": "babel public/out/*.js -d public/out --presets=@babel/preset-env",
 		"webpack:prod": "webpack -c ./webpack.config.js"
 	},
