@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
   dotenv.config();
 
-import session from 'express-session';
 import express from 'express';
 import colors from 'colors';
 import path from 'path';
@@ -13,10 +12,7 @@ import router from './routes/router.js';
 const app = express();
 
 // dotenv config
-const SESSION_SECRET = process.env.SESSION_SECRET,
-      SPOTIFY_SECRET = process.env.SPOTIFY_SECRET,
-      REDIRECT_URI  = process.env.REDIRECT_URI,
-      SPOTIFY_ID = process.env.SPOTIFY_ID,
+const REDIRECT_URI = process.env.REDIRECT_URI,
       TWITCH_ID = process.env.TWITCH_ID,
       AUTH_URL = process.env.AUTH_URL,
       PORT = process.env.PORT
@@ -28,16 +24,7 @@ const __dirname = path.dirname(public_path);
 app.set('view engine', 'ejs');
 app.engine('ejs', ejs.__express);
 
-// spotify
-
 // middlewares
-app.use(session
-  ({
-    secret: SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false
-  })
-);
 app.use(cors());
 app.use(express.static(__dirname));
 
