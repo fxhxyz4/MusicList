@@ -31,9 +31,10 @@ export async function searchSpotify(query) {
 		});
 
 		const data = await r.json();
-		const result = refs.listEl;
+		console.log(data);
+		let resultEl = refs.listEl;
 
-		result.innerHTML = '';
+		resultEl.innerHTML = '';
 
 		data.tracks.items.forEach(t => {
 			const li = document.createElement('li'),
@@ -44,14 +45,28 @@ export async function searchSpotify(query) {
 			img.classList.add('main__img');
 			a.classList.add('main__link');
 
-			img.src = t.album.images[2].url;
+			img.src = t.album.images[1].url;
 			img.alt = t.album.name;
 			a.href = t.external_urls.spotify;
-			a.innerText = `${t.name} by ${t.artists[0].name}`;
+			// a.innerText = `${t.name} by ${t.artists[0].name}`;
+
+			const searchResult = {
+				imageSrc: t.album.images[1].url,
+				imageAlt: t.album.name,
+				url: t.external_urls.spotify,
+			};
+
+			let results = localStorage.getItem('searchRes');
+			results = results ? JSON.parse(results) : [];
+
+			results.push(searchResult);
+			localStorage.setItem('searchRes', JSON.stringify(results));
+
+			const resultEl = document.querySelector('.main__list');
+			resultEl.appendChild(li);
 
 			li.appendChild(img);
 			li.appendChild(a);
-			result.appendChild(li);
 		});
 	} catch (e) {
 		console.error(e);
