@@ -32,8 +32,8 @@ export async function searchSpotify(query) {
 
 		const data = await r.json();
 		console.log(data);
-		let resultEl = refs.listEl;
 
+		let resultEl = refs.listEl;
 		resultEl.innerHTML = '';
 
 		data.tracks.items.forEach(t => {
@@ -49,8 +49,10 @@ export async function searchSpotify(query) {
 
 			img.src = t.album.images[1].url;
 			img.alt = t.album.name;
+
 			a.href = t.external_urls.spotify;
 			a.target = '_blank';
+
 			a.rel = 'noopener noreferrer nofollow';
 			a.textContent = `${t.name} - ${t.artists[0].name}`;
 			span.textContent = `click`;
