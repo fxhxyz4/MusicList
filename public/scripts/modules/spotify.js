@@ -1,5 +1,5 @@
 import refs from './refs.js';
-import license from '../../../data.json';
+import license from '../../../data/data.json';
 
 const SPOTIFY_ID = process.env.SPOTIFY_ID;
 const SPOTIFY_SECRET = process.env.SPOTIFY_SECRET;
