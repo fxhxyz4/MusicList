@@ -48,7 +48,9 @@ export async function searchSpotify(query) {
 			img.src = t.album.images[1].url;
 			img.alt = t.album.name;
 			a.href = t.external_urls.spotify;
-			// a.innerText = `${t.name} by ${t.artists[0].name}`;
+			a.target = '_blank';
+			a.rel = 'noopener noreferrer nofollow';
+			a.textContent = `${t.name} - ${t.artists[0].name}`;
 
 			const searchResult = {
 				imageSrc: t.album.images[1].url,
@@ -62,7 +64,6 @@ export async function searchSpotify(query) {
 			results.push(searchResult);
 			localStorage.setItem('searchRes', JSON.stringify(results));
 
-			const resultEl = document.querySelector('.main__list');
 			resultEl.appendChild(li);
 
 			li.appendChild(img);
