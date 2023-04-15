@@ -40,6 +40,10 @@ export async function searchSpotify(query) {
 				img = document.createElement('img'),
 				a = document.createElement('a');
 
+			li.classList.add('main__item');
+			img.classList.add('main__img');
+			a.classList.add('main__link');
+
 			img.src = t.album.images[2].url;
 			img.alt = t.album.name;
 			a.href = t.external_urls.spotify;
