@@ -6,7 +6,7 @@ import { searchSpotify } from './modules/spotify.js';
 refs.formEl.addEventListener('submit', e => {
 	e.preventDefault();
 
-	const value = refs.inputEl.value;
+	const value = refs.inputEl.value.trim();
 	searchSpotify(value);
 
 	refs.formEl.reset();
