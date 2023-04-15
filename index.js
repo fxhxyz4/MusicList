@@ -18,9 +18,7 @@ const REDIRECT_URI = process.env.REDIRECT_URI,
       PORT = process.env.PORT;
 
 const URI_ENCODE = encodeURIComponent(REDIRECT_URI);
-
 const TWITCH_URL = `${AUTH_URL}?response_type=code&redirect_uri=${URI_ENCODE}/&client_id=${TWITCH_ID}`
-const token_uri = 'https://accounts.spotify.com/api/token';
 
 const public_path = `./public/`;
 const __dirname = path.dirname(public_path);
@@ -44,6 +42,7 @@ app.get('*', (req, res) => {
   res.render('404');
 });
 
+// server
 app.listen(PORT, () => {
 	if (process.env.PORT != 3939) return console.error(`[error] incorrect port`.red);
 	return console.debug(`Server started on PORT: ${PORT}`.toLowerCase().rainbow);
