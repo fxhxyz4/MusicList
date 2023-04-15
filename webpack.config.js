@@ -9,4 +9,7 @@ export default {
 		filename: 'main.min.js',
 		path: path.resolve(__dirname, 'out'),
 	},
+	experiments: {
+		topLevelAwait: true,
+	},
 };
