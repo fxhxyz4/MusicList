@@ -24,7 +24,7 @@ export async function searchSpotify(query) {
 	const token = d.access_token;
 
 	try {
-		const r = await fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, {
+		const r = await fetch(`https://api.spotify.com/v1/search?type=track&q=${query}&limit=15`, {
 			headers: {
 				Authorization: `Bearer ${token}`,
 			},
