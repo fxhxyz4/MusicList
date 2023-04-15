@@ -1,5 +1,6 @@
 import refs from './refs.js';
 import license from '../../../data/data.json';
+import { doc } from 'prettier';
 
 const SPOTIFY_ID = process.env.SPOTIFY_ID;
 const SPOTIFY_SECRET = process.env.SPOTIFY_SECRET;
@@ -38,9 +39,11 @@ export async function searchSpotify(query) {
 
 		data.tracks.items.forEach(t => {
 			const li = document.createElement('li'),
+				span = document.createElement('span'),
 				img = document.createElement('img'),
 				a = document.createElement('a');
 
+			span.classList.add('main__span');
 			li.classList.add('main__item');
 			img.classList.add('main__img');
 			a.classList.add('main__link');
@@ -51,6 +54,7 @@ export async function searchSpotify(query) {
 			a.target = '_blank';
 			a.rel = 'noopener noreferrer nofollow';
 			a.textContent = `${t.name} - ${t.artists[0].name}`;
+			span.textContent = `click`;
 
 			const searchResult = {
 				imageSrc: t.album.images[1].url,
@@ -65,6 +69,7 @@ export async function searchSpotify(query) {
 			localStorage.setItem('searchRes', JSON.stringify(results));
 
 			resultEl.appendChild(li);
+			a.appendChild(span);
 
 			li.appendChild(img);
 			li.appendChild(a);
