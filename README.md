@@ -20,4 +20,4 @@
 
 #
 
-### License: [MIT](./LICENSE.md)
+### License: [Apache 2.0](./LICENSE.md)
