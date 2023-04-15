@@ -20,4 +20,11 @@
 
 #
 
+### Your suggestions:
+
+- [issues](https://github.com/fxhxyz4/MusicList/issues)
+- [discussions](https://github.com/fxhxyz4/MusicList/discussions)
+
+#
+
 ### License: [Apache 2.0](./LICENSE.md)
