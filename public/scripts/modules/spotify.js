@@ -8,13 +8,13 @@ const token_uri = 'https://accounts.spotify.com/api/token';
 const licenseArray = license.data;
 
 const authParams = `${SPOTIFY_ID}:${SPOTIFY_SECRET}`;
-const encodedAuthString = btoa(authParams);
+const encodedString = btoa(authParams);
 
 export async function searchSpotify(query) {
 	const res = await fetch(token_uri, {
 		method: 'POST',
 		headers: {
-			Authorization: `Basic ${encodedAuthString}`,
+			Authorization: `Basic ${encodedString}`,
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
 		body: 'grant_type=client_credentials',
