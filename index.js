@@ -17,9 +17,9 @@ const REDIRECT_URI = process.env.REDIRECT_URI,
       AUTH_URL = process.env.AUTH_URL,
       PORT = process.env.PORT;
 
-uriEncode = encodeURIComponent(REDIRECT_URI);
+const URI_ENCODE = encodeURIComponent(REDIRECT_URI);
 
-const TWITCH_URL = `${AUTH_URL}?response_type=code&redirect_uri=${uriEncode}/&client_id=${TWITCH_ID}`
+const TWITCH_URL = `${AUTH_URL}?response_type=code&redirect_uri=${URI_ENCODE}/&client_id=${TWITCH_ID}`
 const public_path = `./public/`;
 const __dirname = path.dirname(public_path);
 

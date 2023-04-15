@@ -19,9 +19,9 @@ export async function searchSpotify(query) {
 		result.innerHTML = '';
 
 		data.tracks.items.forEach(t => {
-			const li = document.createElement('li');
-			const img = document.createElement('img');
-			const a = document.createElement('a');
+			const li = document.createElement('li'),
+				img = document.createElement('img'),
+				a = document.createElement('a');
 
 			img.src = t.album.images[2].url;
 			img.alt = t.album.name;
