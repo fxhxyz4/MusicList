@@ -1,11 +1,28 @@
 import refs from './refs.js';
+import config from '../config/config.js';
 import license from '../../../data.json';
 
+const client_id = config.client_id;
+const client_secret = config.client_secret;
+const token_endpoint = 'https://accounts.spotify.com/api/token';
 const licenseArray = license.data;
 
-export async function searchSpotify(query) {
-	const token = '74e32fcef00f4917950e482de83f327d';
+const authString = `${client_id}:${client_secret}`;
+const encodedAuthString = btoa(authString);
 
+const response = await fetch(token_endpoint, {
+	method: 'POST',
+	headers: {
+		Authorization: `Basic ${encodedAuthString}`,
+		'Content-Type': 'application/x-www-form-urlencoded',
+	},
+	body: 'grant_type=client_credentials',
+});
+
+const data = await response.json();
+const token = data.access_token;
+
+export async function searchSpotify(query) {
 	try {
 		const r = await fetch(`https://api.spotify.com/v1/search?type=track&q=${query}`, {
 			headers: {
