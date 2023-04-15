@@ -7,7 +7,15 @@ refs.formEl.addEventListener('submit', e => {
 	e.preventDefault();
 
 	const value = refs.inputEl.value.trim();
-	searchSpotify(value);
+	console.log(value);
+
+	if (value === '' || null) {
+		refs.inputEl.placeholder = `[error]`;
+		console.error(`[error]`);
+	} else {
+		searchSpotify(value);
+		refs.inputEl.placeholder = `Type to search...`;
+	}
 
 	refs.formEl.reset();
 });
