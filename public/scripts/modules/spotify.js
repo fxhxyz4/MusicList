@@ -44,6 +44,7 @@ export async function searchSpotify(query) {
 
 			span.classList.add('main__span');
 			li.classList.add('main__item');
+
 			img.classList.add('main__img');
 			a.classList.add('main__link');
 
@@ -52,8 +53,8 @@ export async function searchSpotify(query) {
 
 			a.href = t.external_urls.spotify;
 			a.target = '_blank';
-
 			a.rel = 'noopener noreferrer nofollow';
+
 			a.textContent = `${t.name} - ${t.artists[0].name}`;
 			span.textContent = `click`;
 
