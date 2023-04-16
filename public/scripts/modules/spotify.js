@@ -48,9 +48,6 @@ export async function searchSpotify(query) {
 			img.classList.add('main__img');
 			a.classList.add('main__link');
 
-			img.src = t.album.images[1].url;
-			img.alt = t.album.name;
-
 			a.href = t.external_urls.spotify;
 			a.target = '_blank';
 			a.rel = 'noopener noreferrer nofollow';
@@ -58,17 +55,26 @@ export async function searchSpotify(query) {
 			a.textContent = `${t.name} - ${t.artists[0].name}`;
 			span.textContent = `click`;
 
-			const searchResult = {
-				imageSrc: t.album.images[1].url,
-				imageAlt: t.album.name,
-				url: t.external_urls.spotify,
+			// love js
+
+			img.onload = () => {
+				if (licenseArray.includes(t.name)) {
+					li.style.backgroundColor = `#fff`;
+					img.style.opacity = `0`;
+
+					a.style.opacity = `1`;
+					a.textContent = `DMCA`;
+
+					a.style.color = `red`;
+					a.style.fontSize = `24px`;
+
+					a.style.padding = `30px`;
+					a.style.fontWeight = `500`;
+				}
 			};
 
-			let results = localStorage.getItem('searchRes');
-			results = results ? JSON.parse(results) : [];
-
-			results.push(searchResult);
-			localStorage.setItem('searchRes', JSON.stringify(results));
+			img.src = t.album.images[1].url;
+			img.alt = t.album.name;
 
 			resultEl.appendChild(li);
 			a.appendChild(span);
