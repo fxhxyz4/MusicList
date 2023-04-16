@@ -10,6 +10,8 @@ const licenseArray = license.data;
 const authParams = `${SPOTIFY_ID}:${SPOTIFY_SECRET}`;
 const encodedString = btoa(authParams);
 
+let count = 1;
+
 export async function searchSpotify(query) {
 	const res = await fetch(token_uri, {
 		method: 'POST',
@@ -81,7 +83,25 @@ export async function searchSpotify(query) {
 
 			li.appendChild(img);
 			li.appendChild(a);
+
+			const key = count;
+			const value = JSON.stringify({
+				name: t.name,
+				artist: t.artists[0].name,
+				url: t.external_urls.spotify,
+			});
+
+			localStorage.setItem(key, value);
+			const local = localStorage.getItem(key);
+
+			count++;
 		});
+
+		if (count === 15) {
+			localStorage.clear();
+		}
+
+		count = 1;
 	} catch (e) {
 		console.error(e);
 	}

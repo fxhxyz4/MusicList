@@ -9,6 +9,9 @@ refs.formEl.addEventListener('submit', e => {
 	const value = refs.inputEl.value.trim();
 	console.log(value);
 
+	localStorage.setItem('input', value);
+	const inputStorage = localStorage.getItem('input');
+
 	if (value === '' || null) {
 		refs.inputEl.placeholder = `[error]`;
 		console.error(`[error]`);
