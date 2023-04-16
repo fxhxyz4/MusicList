@@ -23,7 +23,7 @@
 ### Your suggestions:
 
 - [issues](https://github.com/fxhxyz4/MusicList/issues)
-- [discussions](https://github.com/fxhxyz4/MusicList/discussions)
+- [discussion](https://github.com/fxhxyz4/MusicList/discussions)
 
 #
 
