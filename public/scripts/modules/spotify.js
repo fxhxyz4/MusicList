@@ -50,14 +50,21 @@ export async function searchSpotify(query) {
 			img.classList.add('main__img');
 			a.classList.add('main__link');
 
-			a.href = t.external_urls.spotify;
-			a.target = '_blank';
-			a.rel = 'noopener noreferrer nofollow';
-
-			a.textContent = `${t.name} - ${t.artists[0].name}`;
-			span.textContent = `click`;
-
 			// love js
+
+			const key = count;
+			const value = JSON.stringify({
+				name: t.name,
+				artist: t.artists[0].name,
+				url: t.external_urls.spotify,
+			});
+
+			JSON.stringify(localStorage.setItem(key, value));
+			count++;
+
+			const local = JSON.parse(localStorage.getItem(count));
+			// console.log(local);
+			// resultEl = local;
 
 			img.onload = () => {
 				if (licenseArray.includes(t.name)) {
@@ -78,23 +85,18 @@ export async function searchSpotify(query) {
 			img.src = t.album.images[1].url;
 			img.alt = t.album.name;
 
+			a.href = t.external_urls.spotify;
+			a.target = '_blank';
+			a.rel = 'noopener noreferrer nofollow';
+
+			a.textContent = `${t.name} - ${t.artists[0].name}`;
+			span.textContent = `click`;
+
 			resultEl.appendChild(li);
 			a.appendChild(span);
 
 			li.appendChild(img);
 			li.appendChild(a);
-
-			const key = count;
-			const value = JSON.stringify({
-				name: t.name,
-				artist: t.artists[0].name,
-				url: t.external_urls.spotify,
-			});
-
-			localStorage.setItem(key, value);
-			const local = localStorage.getItem(key);
-
-			count++;
 		});
 
 		if (count === 15) {
