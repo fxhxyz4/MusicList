@@ -54,6 +54,7 @@
 		"@babel/core": "^7.21.4",
 		"@babel/preset-env": "^7.21.4",
 		"colors": "^1.4.0",
+		"jest": "^29.5.0",
 		"nodemon": "^2.0.22",
 		"prettier": "^2.8.7",
 		"webpack": "^5.77.0",
