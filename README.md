@@ -20,6 +20,12 @@
 
 #
 
+### TODO:
+
+- localStorage ♿
+
+#
+
 ### Your suggestions:
 
 - [issues](https://github.com/fxhxyz4/MusicList/issues)
