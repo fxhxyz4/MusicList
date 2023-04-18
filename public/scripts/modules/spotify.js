@@ -1,5 +1,5 @@
-import refs from './refs.js';
 import license from '../../../data/data.json';
+import refs from './refs.js';
 
 const SPOTIFY_ID = process.env.SPOTIFY_ID;
 const SPOTIFY_SECRET = process.env.SPOTIFY_SECRET;
@@ -38,7 +38,7 @@ export async function searchSpotify(query) {
 		let resultEl = refs.listEl;
 		resultEl.innerHTML = '';
 
-		data.tracks.items.forEach(t => {
+		data.tracks.items.forEach((t, index) => {
 			const li = document.createElement('li'),
 				span = document.createElement('span'),
 				img = document.createElement('img'),
@@ -50,21 +50,8 @@ export async function searchSpotify(query) {
 			img.classList.add('main__img');
 			a.classList.add('main__link');
 
-			// love js
-
-			const key = count;
-			const value = JSON.stringify({
-				name: t.name,
-				artist: t.artists[0].name,
-				url: t.external_urls.spotify,
-			});
-
-			JSON.stringify(localStorage.setItem(key, value));
+			localStorage.setItem(`${count}`, JSON.stringify(t));
 			count++;
-
-			const local = JSON.parse(localStorage.getItem(count));
-			// console.log(local);
-			// resultEl = local;
 
 			img.onload = () => {
 				if (licenseArray.includes(t.name)) {
@@ -82,14 +69,19 @@ export async function searchSpotify(query) {
 				}
 			};
 
-			img.src = t.album.images[1].url;
-			img.alt = t.album.name;
+			const storedTrack = localStorage.getItem(index + 1);
+			const trackObject = JSON.parse(storedTrack);
 
-			a.href = t.external_urls.spotify;
+			console.log(trackObject);
+
+			img.src = trackObject.album.images[1].url;
+			img.alt = trackObject.album.name;
+
+			a.href = trackObject.external_urls.spotify;
 			a.target = '_blank';
 			a.rel = 'noopener noreferrer nofollow';
 
-			a.textContent = `${t.name} - ${t.artists[0].name}`;
+			a.textContent = `${trackObject.name} - ${trackObject.artists[0].name}`;
 			span.textContent = `click`;
 
 			resultEl.appendChild(li);
@@ -98,10 +90,6 @@ export async function searchSpotify(query) {
 			li.appendChild(img);
 			li.appendChild(a);
 		});
-
-		if (count === 15) {
-			localStorage.clear();
-		}
 
 		count = 1;
 	} catch (e) {
