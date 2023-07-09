@@ -18,8 +18,6 @@ async function searchSpotify(trackName) {
 function renderElements(tracksObj) {
   const trackItems = tracksObj.tracks.items;
 
-  console.log(trackItems);
-
   let resultEl = refs.listEl;
 	resultEl.innerHTML = '';
 
