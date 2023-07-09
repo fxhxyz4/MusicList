@@ -5,4 +5,4 @@ const refs = {
 	listEl: document.querySelector('.main__list'),
 };
 
-export default refs;
+export { refs };

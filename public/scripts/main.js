@@ -1,7 +1,7 @@
 console.clear();
 
-import refs from './modules/refs.js';
-import { searchSpotify } from './modules/spotify.js';
+import { refs } from './modules/refs.js';
+import { searchSpotify } from './modules/fetch.js';
 
 refs.formEl.addEventListener('submit', e => {
 	e.preventDefault();
