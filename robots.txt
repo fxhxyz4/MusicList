@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-
-Host: https://music-list-lol.onrender.com
-Sitemap: https://music-list-lol.onrender.com/sitemap.xml
