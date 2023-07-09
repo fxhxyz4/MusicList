@@ -6,7 +6,7 @@
 				"targets": {
 					"modules": "false",
 					"corejs": "3.29",
-					"node": "18"
+					"node": "20"
 				}
 			}
 		]
