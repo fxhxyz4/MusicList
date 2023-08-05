@@ -17,7 +17,7 @@ async function searchSpotify(trackName) {
 
 function renderElements(tracksObj) {
   if (tracksObj != null) {
-    refs.spinEl.classList.add('is-hidden');
+    refs.spinEl.classList.add('visually-hidden');
   }
 
   const trackItems = tracksObj.tracks.items;
@@ -57,7 +57,6 @@ function renderElements(tracksObj) {
           };
       */
 
-
 			img.src = t.album.images[1].url;
 			img.alt = t.album.name;
 
@@ -76,4 +75,4 @@ function renderElements(tracksObj) {
 	});
 }
 
-export {searchSpotify, renderElements};
+export { searchSpotify, renderElements };
