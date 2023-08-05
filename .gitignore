@@ -1,7 +1,5 @@
 # misc
 .DS_Store
-public/styles/global.css
-public/scripts/config/config.js
 
 # Logs
 logs
