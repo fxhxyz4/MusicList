@@ -12,13 +12,13 @@ refs.formEl.addEventListener('submit', e => {
 	localStorage.setItem('input', value);
 	const inputStorage = localStorage.getItem('input');
 
-	if (value === '' || null) {
+	if (!value) {
 		refs.inputEl.placeholder = `[error]`;
 		console.error(`[error]`);
 	} else {
 		searchSpotify(value);
 
-    refs.spinEl.classList.remove('is-hidden');
+    refs.spinEl.classList.remove('visually-hidden');
 		refs.inputEl.placeholder = `Type to search...`;
 	}
 
