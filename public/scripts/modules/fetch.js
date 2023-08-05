@@ -16,6 +16,10 @@ async function searchSpotify(trackName) {
 }
 
 function renderElements(tracksObj) {
+  if (tracksObj != null) {
+    refs.spinEl.classList.add('is-hidden');
+  }
+
   const trackItems = tracksObj.tracks.items;
 
   let resultEl = refs.listEl;
@@ -69,7 +73,7 @@ function renderElements(tracksObj) {
 
 			li.appendChild(img);
 			li.appendChild(a);
-		});
+	});
 }
 
 export {searchSpotify, renderElements};
