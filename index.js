@@ -111,6 +111,13 @@ async function searchTracks(trackName) {
   }
 */
 
+app.get('/robots.txt', (req, res) => {
+  res.sendFile(path.resolve('./public/robots.txt'));
+})
+
+app.get('/sitemap.xml', (req, res) => {
+  res.sendFile(path.resolve('./public/sitemap.xml'));
+})
 
 app.get('*', (req, res) => {
   res.render('404');
