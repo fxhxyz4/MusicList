@@ -17,6 +17,8 @@ refs.formEl.addEventListener('submit', e => {
 		console.error(`[error]`);
 	} else {
 		searchSpotify(value);
+
+    refs.spinEl.classList.remove('is-hidden');
 		refs.inputEl.placeholder = `Type to search...`;
 	}
 
