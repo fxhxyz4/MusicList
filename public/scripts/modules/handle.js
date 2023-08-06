@@ -1,21 +1,25 @@
 import { refs } from './refs.js';
 
 function handleCallback() {
-  window.open('/auth/twitch');
+  const popup = window.open('/auth/twitch', "Twitch Auth", "width=600,height=600");
 
-  fetch('/auth/twitch/callback')
-  .then(response => response.json())
-  .then(data => {
-    console.log(data);
-    if (data.login === true) {
-      refs.loginBtn.textContent = `Logout`;
-    } else {
-      console.error(`error`);
+  window.addEventListener('message', handleResponse);
+
+  function handleResponse(e) {
+    if (e.origin === window.location.origin) {
+      const data = e.data;
+      console.log(data);
+
+      if (data.login === true) {
+        refs.loginBtn.textContent = `Logout`;
+      } else {
+        console.error(`error`);
+      }
+
+      popup.close();
+      window.removeEventListener('message', handleResponse);
     }
-  })
-  .catch(e => {
-    console.error(`Error on authorization: ${e.message}`);
-  });
+  }
 }
 
 export { handleCallback };
