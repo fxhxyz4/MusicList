@@ -60,7 +60,7 @@ app.post('/', async (req, res) => {
   }
 })
 
-app.use('/auth/twitch', (req, res, next) => {
+app.get('/auth/twitch', (req, res, next) => {
 	res.redirect(TWITCH_URL);
   next();
 });
