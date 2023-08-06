@@ -69,13 +69,18 @@ app.get('/auth/twitch/callback', async (req, res) => {
   try {
     if (req.query.code) {
       const authCode = req.query.code;
-      res.redirect('/');
-
-      res.json({ login: true });
+      res.locals.loginData = { login: true };
     }
+
+    res.redirect('/');
   } catch (e) {
     console.error(`Error on authorization: ${e}`.red);
   }
+});
+
+app.get('/', (req, res) => {
+  const loginData = res.locals.loginData;
+  res.render('index', { loginData });
 });
 
 async function searchTracks(trackName) {
