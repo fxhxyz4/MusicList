@@ -17,6 +17,35 @@
 
 #
 
+### installation
+```git
+$ git clone https://github.com/fxhxyz4/MusicList.git
+$ cd MusicList
+```
+
+#
+
+### dependencies
+```
+$ npm install
+```
+
+#
+
+### development
+```
+$ npm run dev
+```
+
+#
+
+### production
+```
+$ npm run prod
+```
+
+#
+
 ### suggestions:
 
 - [issues](https://github.com/fxhxyz4/MusicList/issues)
