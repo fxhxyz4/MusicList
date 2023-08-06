@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 
+Disallow: /error
+
 Host: https://music-list-lol.onrender.com
 Sitemap: https://music-list-lol.onrender.com/sitemap.xml
