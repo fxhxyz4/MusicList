@@ -1,25 +1,22 @@
 import { refs } from './refs.js';
 
-function handleCallback() {
+async function handleCallback() {
   const popup = window.open('/auth/twitch');
 
-  window.addEventListener('message', handleResponse);
+  const message = await new Promise((resolve) => {
+    window.addEventListener('message', resolve);
+  });
 
-  function handleResponse(e) {
-    if (e.origin === window.location.origin) {
-      const data = e.data;
-      console.log(data);
+  const { data } = message;
 
-      if (data.login === true) {
-        refs.loginBtn.textContent = `Logout`;
-      } else {
-        console.error(`error`);
-      }
-
-      popup.close();
-      window.removeEventListener('message', handleResponse);
-    }
+  if (data.login === true) {
+    refs.loginBtn.textContent = `Logout`;
+  } else {
+    console.error(`error`);
   }
+
+  popup.close();
+  window.removeEventListener('message', handleResponse);
 }
 
 export { handleCallback };
