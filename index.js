@@ -72,9 +72,6 @@ app.get('/auth/twitch/callback', async (req, res, next) => {
 
     res.json({ login: true });
     next();
-  } else {
-    console.error(`Error on authorization: ${error.message}`.red);
-    next();
   }
 });
 
