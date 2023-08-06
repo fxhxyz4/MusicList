@@ -39,8 +39,8 @@
 		"babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
 		"webpack:watch": "webpack -c ./webpack.config.js -w",
 		"prod:css": "npm run css && npm run webpack:prod && npm run babel:prod",
-    "prod": "npm run webpack:prod && npm run babel:prod",
-    "babel:prod": "babel public/out/*.js -d public/out --presets=@babel/preset-env",
+		"prod": "npm run webpack:prod && npm run babel:prod",
+		"babel:prod": "babel public/out/*.js -d public/out --presets=@babel/preset-env",
 		"webpack:prod": "webpack -c ./webpack.config.js"
 	},
 	"dependencies": {
@@ -55,12 +55,13 @@
 		"@babel/cli": "^7.22.9",
 		"@babel/core": "^7.22.9",
 		"@babel/preset-env": "^7.22.9",
-    "colors": "^1.4.0",
+		"colors": "^1.4.0",
+		"morgan": "^1.10.0",
 		"nodemon": "^3.0.1",
 		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4"
 	},
 	"engines": {
-		"node": "18.x"
+		"node": "20.x"
 	}
 }

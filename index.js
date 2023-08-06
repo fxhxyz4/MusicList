@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import express from 'express';
 import colors from 'colors';
+import morgan from 'morgan';
 import axios from 'axios';
 import path from 'path';
 import cors from 'cors';
@@ -14,8 +15,8 @@ const {
   PORT,
   TWITCH_ID,
   SPOTIFY_ID,
-  AUTH_SPOTIFY,
   AUTH_TWITCH,
+  AUTH_SPOTIFY,
   SPOTIFY_SECRET,
   REDIRECT_URI,
   AUDD_URI,
@@ -33,48 +34,64 @@ const __dirname = path.dirname(publicPath);
 
 const requestBody = new URLSearchParams();
 
+console.log(1);
+
 app.set('view engine', 'ejs');
 app.engine('ejs', ejs.__express);
 
 app.use(cors());
-app.use(express.json())
+app.use(morgan('common'));
 
+app.use(express.json());
 app.use(express.static(__dirname));
+
+app.use((err, req, res, next) => {
+  console.error(err.red);
+
+  res.status(err.status || 500).render('error', {
+    message: err.message || 'Sever error',
+    statusCode: err.status || 500
+  });
+});
 
 app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.post('/', async (req, res) => {
-  const trackName = req.body.track
+app.post('/', async (req, res, next) => {
+  const trackName = req.body.track;
   let tracks;
 
   try {
-    if (!trackName)
-      return console.error(`trackName undefined or null`.red)
-    else
+    if (!trackName) {
+      console.error(`trackName undefined or null`.red);
+      next(e);
+    } else {
       tracks = await searchTracks(trackName);
       res.send({ tracks })
+    }
   } catch (e) {
-    console.error(`${e}`.red);
+    next(e);
   }
 })
 
 app.get('/auth/twitch', (req, res, next) => {
-	res.redirect(TWITCH_URL);
-  next();
+  try {
+    res.redirect(TWITCH_URL);
+  } catch (e) {
+    next(e);
+  }
 });
 
-app.get('/auth/twitch/callback', async (req, res) => {
+app.get('/auth/twitch/callback', (req, res, next) => {
   try {
     if (req.query.code) {
       const authCode = req.query.code;
-      const loginData = { login: true };
-
-      res.json(loginData);
+      res.send({ login: true, code: authCode });
     }
+
   } catch (e) {
-    console.error(`Error on authorization: ${e}`.red);
+    next(e);
   }
 });
 
