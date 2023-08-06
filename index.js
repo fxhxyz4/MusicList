@@ -65,6 +65,15 @@ app.use('/auth/twitch', (req, res, next) => {
   next();
 });
 
+app.get('/auth/twitch/callback', (req, res) => {
+  if (req.query.code) {
+    const authorizationCode = req.query.code;
+    res.send('lol');
+  } else {
+    res.send('err');
+  }
+});
+
 async function searchTracks(trackName) {
   requestBody.append('grant_type', 'client_credentials');
 
@@ -89,27 +98,37 @@ async function searchTracks(trackName) {
       });
 
       const tracks = await r.data.tracks;
-      return tracks;
+      const trackNames = tracks.items.map(item => item.name);
 
+      const dmcaResults = await checkDMCA(trackNames);
+      const result = dmcaResults;
+
+      return result;
     } catch (e) {
       console.error(`${e}`.red);
     }
 }
 
-/*
-*
-  @fix
-  async function checkDMCA(tracksList) {
-    try {
-      const res = await fetch(AUDD_URI, {
-        methods: 'get',
-        body
-      })
-    } catch (e) {
-      console.error(`${e}`.red);
-    }
+async function checkDMCA(tracksName) {
+  const MB_API_URL = 'https://musicbrainz.org/ws/2';
+
+  try {
+    const response = await axios.get(`${MB_API_URL}/recording`, {
+      params: {
+        query: tracksName,
+        limit: 1,
+        fmt: 'json',
+      },
+    });
+
+    const recordings = response.data.recordings;
+    console.log(recordings);
+
+    return recordings;
+  } catch (e) {
+    console.error(`${e}`.red);
   }
-*/
+}
 
 app.get('/robots.txt', (req, res) => {
   res.sendFile(path.resolve('./public/robots.txt'));
