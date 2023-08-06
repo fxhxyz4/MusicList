@@ -2,6 +2,7 @@ console.clear();
 
 import { refs } from './modules/refs.js';
 import { searchSpotify } from './modules/fetch.js';
+import { handleCallback } from './modules/handle.js';
 
 refs.formEl.addEventListener('submit', e => {
 	e.preventDefault();
@@ -24,6 +25,4 @@ refs.formEl.addEventListener('submit', e => {
 	refs.formEl.reset();
 });
 
-refs.loginBtn.addEventListener('click', () => {
-	window.open('/auth/twitch');
-});
+refs.loginBtn.addEventListener('click', handleCallback);
