@@ -13,7 +13,7 @@
 
 ### TODO:
 
-- localStorage ♿
+- mb localStorage ♿
 
 #
 
