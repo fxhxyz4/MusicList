@@ -57,7 +57,7 @@
 		"@babel/preset-env": "^7.22.5",
 		"colors": "^1.4.0",
 		"nodemon": "^3.0.1",
-		"prettier": "^2.8.8",
+		"prettier": "^3.0.1",
 		"webpack": "^5.85.1",
 		"webpack-cli": "^5.1.4"
 	},
