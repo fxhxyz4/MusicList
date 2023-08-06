@@ -65,12 +65,12 @@ app.get('/auth/twitch', (req, res, next) => {
   next();
 });
 
-app.get('/auth/twitch/callback', (req, res) => {
+app.get('/auth/twitch/callback', async (req, res) => {
   if (req.query.code) {
-    const authorizationCode = req.query.code;
-    res.send('lol');
+    const authCode = req.query.code;
+    res.send({ login: true });
   } else {
-    res.send('err');
+    console.error(`Error on authorization: ${error.message}`.red);
   }
 });
 
