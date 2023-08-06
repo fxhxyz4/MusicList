@@ -54,7 +54,7 @@
 	"devDependencies": {
 		"@babel/cli": "^7.22.5",
 		"@babel/core": "^7.21.8",
-		"@babel/preset-env": "^7.22.5",
+		"@babel/preset-env": "^7.22.9",
 		"colors": "^1.4.0",
 		"nodemon": "^3.0.1",
 		"prettier": "^2.8.8",
