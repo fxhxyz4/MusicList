@@ -1,0 +1,33 @@
+<%
+  let title = `Server Error`;
+  let css_dev_path = `../../public/styles/global.css`;
+	let css_prod_path = `../../public/styles/global.min.css`;
+%>
+
+<%- include(`./partials/doctype.ejs`) -%>
+  <head>
+    <meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link type="image/x-icon" rel="shortcut icon" href="./public/images/favicon.ico" />
+		<meta name="robots" content="noindex,nofollow" />
+    <link type="text/css" rel="stylesheet" href="<%- css_prod_path -%>" />
+    <style>
+      .error__title{font-size: 130px; margin-bottom: 15px;} .error__text{font-size: 22px;} .nav-form{cursor: not-allowed !important;} .error{position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);}
+    </style>
+    <title><%- title -%></title>
+  </head>
+
+	<body>
+		<div class="wrapper">
+			<%- include(`./partials/header.ejs`) -%>
+			<main>
+        <div class="error">
+          <h1 class="error__title">statusCode</h1>
+          <p class="error__text">message</p>
+        </div>
+      </main>
+			<%- include(`./partials/footer.ejs`) -%>
+		</div>
+	</body>
+</html>
