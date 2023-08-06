@@ -23,7 +23,7 @@ const {
 } = process.env;
 
 const URI_ENCODE = encodeURIComponent(REDIRECT_URI);
-const TWITCH_URL = `${AUTH_TWITCH}?response_type=code&redirect_uri=${REDIRECT_URI}/&client_id=${TWITCH_ID}`
+const TWITCH_URL = `${AUTH_TWITCH}?response_type=code&redirect_uri=${URI_ENCODE}/&client_id=${TWITCH_ID}`
 
 const authParams = `${SPOTIFY_ID}:${SPOTIFY_SECRET}`;
 const encodedAuthParams = btoa(authParams);
