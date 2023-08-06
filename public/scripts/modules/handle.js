@@ -1,7 +1,7 @@
 import { refs } from './refs.js';
 
 function handleCallback() {
-  const popup = window.open('/auth/twitch', "Twitch Auth", "width=600,height=600");
+  const popup = window.open('/auth/twitch');
 
   window.addEventListener('message', handleResponse);
 
