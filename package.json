@@ -58,7 +58,7 @@
 		"colors": "^1.4.0",
 		"nodemon": "^3.0.1",
 		"prettier": "^2.8.8",
-		"webpack": "^5.85.1",
+		"webpack": "^5.88.2",
 		"webpack-cli": "^5.1.4"
 	},
 	"engines": {
