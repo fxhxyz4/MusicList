@@ -1,4 +1,4 @@
-import { refs } from './refs.js';
+import { handleText } from '../main.js';
 
 function handleCallback() {
   const popup = window.open('/auth/twitch');
@@ -36,6 +36,8 @@ async function fetchData(authCode) {
     if (login) {
       localStorage.setItem('_code', code);
       localStorage.setItem('_login', login);
+
+      handleText();
     }
   } catch (e) {
     console.error(e);
