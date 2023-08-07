@@ -56,14 +56,14 @@ app.post('/', async (req, res, next) => {
 
   try {
     if (!trackName) {
-      console.error(`trackName ${undefined} or ${null}`.red);
+      console.error(`[error] trackName ${undefined} or ${null}`.red);
       res.redirect(`/error?status=500&message=trackName ${undefined} or ${null}`);
     } else {
       tracks = await searchTracks(trackName);
       res.send({ tracks })
     }
   } catch (e) {
-    console.error(`${e}`.red);
+    console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
@@ -72,7 +72,7 @@ app.get('/auth/twitch', (req, res, next) => {
   try {
     res.redirect(TWITCH_URL);
   } catch (e) {
-    console.error(`${e}`.red);
+    console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
@@ -97,7 +97,7 @@ app.get('/auth/twitch/callback', (req, res, next) => {
     }
 
   } catch (e) {
-    console.error(`${e}`.red);
+    console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
@@ -132,7 +132,7 @@ async function searchTracks(trackName) {
       return dmcaResults;
       return tracks;
     } catch (e) {
-      console.error(`${e}`.red);
+      console.error(`[error] ${e}`.red);
     }
 }
 
@@ -153,7 +153,7 @@ async function checkDMCA(tracksName) {
 
     return recordings;
   } catch (e) {
-    console.error(`${e}`.red);
+    console.error(`[error] ${e}`.red);
   }
 }
 
@@ -170,6 +170,7 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
+
 	if (PORT !== '3939') {
     console.error(`[error] incorrect port`.red);
     return;
