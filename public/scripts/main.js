@@ -12,15 +12,15 @@ refs.formEl.addEventListener('submit', e => {
 	localStorage.setItem('_input', value);
 	const inputStorage = localStorage.getItem('_input');
 
-	if (!value) {
-		refs.inputEl.placeholder = `[error]`;
-		console.error(`[error]`);
-	} else {
+	// if (!value) {
+	// 	refs.inputEl.placeholder = `[error]`;
+	// 	console.error(`[error]`);
+	// } else {
 		searchSpotify(value);
 
     refs.spinEl.classList.remove('visually-hidden');
 		refs.inputEl.placeholder = `Type to search...`;
-	}
+	// }
 
 	refs.formEl.reset();
 });
