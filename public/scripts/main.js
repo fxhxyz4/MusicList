@@ -48,3 +48,5 @@ function handleText() {
 
 window.addEventListener('load', handleText);
 window.addEventListener('resize', handleText);
+
+export { handleText };
