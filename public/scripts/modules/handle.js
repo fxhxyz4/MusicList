@@ -33,11 +33,9 @@ async function fetchData(authCode) {
 
     const { login, code } = await res.json();
 
-    if (login === true) {
+    if (login) {
       localStorage.setItem('_code', code);
       localStorage.setItem('_login', login);
-
-      refs.loginBtn.textContent = `Logout`;
     }
   } catch (e) {
     console.error(e);
