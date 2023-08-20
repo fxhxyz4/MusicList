@@ -128,34 +128,34 @@ async function searchTracks(trackName) {
       const tracks = await r.data.tracks;
       const trackNames = tracks.items.map(item => item.name);
 
-      const dmcaResults = await checkDMCA(trackNames);
-      return dmcaResults;
+      // const dmcaResults = await checkDMCA(trackNames);
+      // return dmcaResults;
       return tracks;
     } catch (e) {
       console.error(`[error] ${e}`.red);
     }
 }
 
-async function checkDMCA(tracksName) {
-  const MB_API_URL = 'https://musicbrainz.org/ws/2';
+// async function checkDMCA(tracksName) {
+//   const MB_API_URL = 'https://musicbrainz.org/ws/2';
 
-  try {
-    const response = await axios.get(`${MB_API_URL}/recording`, {
-      params: {
-        query: tracksName,
-        limit: 1,
-        fmt: 'json',
-      },
-    });
+//   try {
+//     const response = await axios.get(`${MB_API_URL}/recording`, {
+//       params: {
+//         query: tracksName,
+//         limit: 1,
+//         fmt: 'json',
+//       },
+//     });
 
-    const recordings = response.data.recordings;
-    console.log(recordings);
+//     const recordings = response.data.recordings;
+//     console.log(recordings);
 
-    return recordings;
-  } catch (e) {
-    console.error(`[error] ${e}`.red);
-  }
-}
+//     return recordings;
+//   } catch (e) {
+//     console.error(`[error] ${e}`.red);
+//   }
+// }
 
 app.get('/robots.txt', (req, res) => {
   res.sendFile(path.resolve('./public/robots.txt'));
