@@ -2,9 +2,9 @@
 	let svg_path = `../../public/images/symbol-defs.svg#`;
 %>
 
-<header class="header">
-	<div class="container">
-		<nav class="navbar nav">
+<header class="header wrap__header">
+	<div class="header__container container">
+		<nav class="nav">
 			<div class="nav-logo">
 				<a class="nav-logo__link" href="/">
 					<svg class="nav-logo__icon" width="40" height="40" aria-label="MusicList logo">
@@ -12,8 +12,7 @@
 					</svg>
 				</a>
 			</div>
-
-			<div class="nav-form">
+			<div class="nav-form nav__nav-form">
 				<form class="nav-form__post" method="post" name="#" enctype="application/x-www-form-urlencoded">
 					<label for="input">
 						<svg class="nav-form__icon" width="30" height="30" aria-label="search icon">
@@ -24,7 +23,7 @@
 				</form>
 			</div>
 			<div class="nav-auth">
-				<button type="button" class="nav-auth__link">
+				<button class="nav-auth__link" type="button">
 					<svg class="nav-auth__icon" width="30" height="30" aria-label="Twitch logo">
 						<use xlink:href="<%- svg_path -%>icon-twitch"></use>
 					</svg>
