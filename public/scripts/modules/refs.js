@@ -4,7 +4,7 @@ const refs = {
 	inputEl: document.querySelector('.nav-form__input'),
 	loginBtn: document.querySelector('.nav-auth__link'),
 	listEl: document.querySelector('.main__list'),
-  spinEl: document.querySelector('.spin'),
+  spinEl: document.querySelector('.main__spin'),
 };
 
 export { refs };
