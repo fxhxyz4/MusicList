@@ -30,7 +30,7 @@
 			"email": "fxhxyz@proton.me"
 		}
 	],
-	"license": "ISC",
+	"license": "Apache-2.0",
 	"scripts": {
 		"dev": "nodemon index.js -- --config",
 		"server": "node index.js",
