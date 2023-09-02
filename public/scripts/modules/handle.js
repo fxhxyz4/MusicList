@@ -19,7 +19,7 @@ function handleCallback() {
         console.error(e);
       }
     }
-  }, 1000);
+  }, 1e3);
 }
 
 async function fetchData(authCode) {
