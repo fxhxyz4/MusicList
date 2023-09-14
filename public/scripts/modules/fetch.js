@@ -26,16 +26,15 @@ function renderElements(tracksObj) {
 	resultEl.innerHTML = '';
 
 	trackItems.forEach((t, i) => {
-		const li = document.createElement('li'),
-			span = document.createElement('span'),
-			img = document.createElement('img'),
-			a = document.createElement('a');
+    const li = document.createElement('li'),
+    span = document.createElement('span'),
+    img = document.createElement('img'),
+    a = document.createElement('a');
+    span.classList.add('main__span');
+    li.classList.add('main__item');
 
-			span.classList.add('main__span');
-			li.classList.add('main__item');
-
-			img.classList.add('main__img');
-			a.classList.add('main__link');
+    img.classList.add('main__img');
+    a.classList.add('main__link');
 
       /*
         *
@@ -57,21 +56,22 @@ function renderElements(tracksObj) {
           };
       */
 
-			img.src = t.album.images[1].url;
-			img.alt = t.album.name;
+		img.src = t.album.images[1].url;
+		img.alt = t.album.name;
 
-			a.href = t.external_urls.spotify;
-			a.target = '_blank';
-			a.rel = 'noopener noreferrer nofollow';
+		a.href = t.external_urls.spotify;
+		a.target = '_blank';
 
-			a.textContent = `${t.name} - ${t.artists[0].name}`;
-			span.textContent = `click`;
+		a.rel = 'noopener noreferrer nofollow';
 
-			resultEl.appendChild(li);
-			a.appendChild(span);
+		a.textContent = `${t.name} - ${t.artists[0].name}`;
+		span.textContent = `click`;
 
-			li.appendChild(img);
-			li.appendChild(a);
+		resultEl.appendChild(li);
+		a.appendChild(span);
+
+		li.appendChild(img);
+		li.appendChild(a);
 	});
 }
 

@@ -8,20 +8,25 @@ import path from 'path';
 import cors from 'cors';
 import ejs from 'ejs';
 
-dotenv.config();
+const environment = process.env.NODE_ENV;
+const dotenvFile = `.env.${environment}`;
+
+dotenv.config({ path: dotenvFile });
 
 const app = express();
 
 const {
   PORT,
+  HOST,
+  TITLE,
+  AUDD_URI,
   TWITCH_ID,
+  AUDD_TOKEN,
   SPOTIFY_ID,
   AUTH_TWITCH,
   AUTH_SPOTIFY,
-  SPOTIFY_SECRET,
   REDIRECT_URI,
-  AUDD_URI,
-  AUDD_TOKEN
+  SPOTIFY_SECRET,
 } = process.env;
 
 const URI_ENCODE = encodeURIComponent(REDIRECT_URI);
@@ -47,7 +52,13 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index', {
+    title: TITLE
+  },
+  {
+    cache: true,
+    filename: 'index.ejs'
+  });
 });
 
 app.post('/', async (req, res, next) => {
@@ -84,7 +95,7 @@ app.get('/error', (req, res, next) => {
   res.render('error', {
     statusCode: statusCode,
     message: message,
-  })
+  });
 });
 
 app.get('/auth/twitch/callback', (req, res, next) => {
@@ -130,6 +141,7 @@ async function searchTracks(trackName) {
 
       // const dmcaResults = await checkDMCA(trackNames);
       // return dmcaResults;
+
       return tracks;
     } catch (e) {
       console.error(`[error] ${e}`.red);
@@ -159,22 +171,26 @@ async function searchTracks(trackName) {
 
 app.get('/robots.txt', (req, res) => {
   res.sendFile(path.resolve('./public/robots.txt'));
-})
+});
 
 app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.resolve('./public/sitemap.xml'));
-})
+});
 
 app.get('*', (req, res) => {
-  res.render('404');
+  res.render('404', {
+    cache: true,
+    filename: '404.ejs'
+  });
 });
 
 app.listen(PORT, () => {
 
-	if (PORT !== '3939') {
+  if (PORT && PORT !== '3000' && PORT !== '3939') {
     console.error(`[error] incorrect port`.red);
     return;
   }
 
-  console.debug(`[server] Server started on PORT: ${PORT}`.toLowerCase().rainbow);
+  console.debug(
+    `[server] Server started on ${HOST}`.toLowerCase().rainbow);
 });

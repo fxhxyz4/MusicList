@@ -1,7 +1,6 @@
 <%
   let title = `Server Error`;
-  let css_dev_path = `../../public/styles/global.css`;
-	let css_prod_path = `../../public/styles/global.min.css`;
+	let css_path = `../../public/styles/global.min.css`;
 %>
 
 <%- include(`./partials/doctype.ejs`) -%>
@@ -16,8 +15,8 @@
     <meta name="darkreader" content="NO-DARKREADER-PLUGIN" />
 		<meta name="robots" content="noindex, nofollow" />
     <link href="https://unpkg.com/modern-normalize@2.0.0/modern-normalize.css" rel="stylesheet" />
-    <link type="text/css" rel="stylesheet" href="<%- css_prod_path -%>" />
-    <title><%- title -%></title>
+    <link type="text/css" rel="stylesheet" href="<%= css_path %>" />
+    <title><%= title %></title>
   </head>
 	<body>
     <%- include(`./partials/noscript.ejs`) -%>
@@ -25,8 +24,10 @@
 			<%- include(`./partials/header.ejs`) -%>
 			<main>
         <div class="error">
-          <h1 class="error__title"><%= statusCode %></h1>
-          <p class="error__text"><%= message %></p>
+          <% if (statusCode && message) { %>
+            <h1 class="error__title"><%= statusCode %></h1>
+            <p class="error__text"><%= message %></p>
+          <% } %>
         </div>
       </main>
 			<%- include(`./partials/footer.ejs`) -%>
