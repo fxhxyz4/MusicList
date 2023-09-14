@@ -1,6 +1,10 @@
 <%
   let js_dev_path = `../../public/scripts/main.js`
-  let js_prod_path = `../../public/out/main.min.js`
+  let js_prod_path = `../../public/out/main.min.js?v1`
+
+  let js_path = process.env.NODE_ENV === 'production'
+    ? js_prod_path
+    : js_dev_path;
 %>
 
 <script type="module" src="<%- js_prod_path -%>"></script>
