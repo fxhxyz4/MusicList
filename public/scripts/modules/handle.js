@@ -1,4 +1,4 @@
-import { handleText } from '../main.js';
+import { handleText } from './handleText.js';
 
 function handleCallback() {
   const popup = window.open('/auth/twitch');
