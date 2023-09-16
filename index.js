@@ -1,19 +1,27 @@
 import dotenv from 'dotenv';
 
+import session from 'express-session';
 import express from 'express';
 import colors from 'colors';
 import morgan from 'morgan';
+import helmet from 'helmet';
 import axios from 'axios';
 import path from 'path';
 import cors from 'cors';
 import ejs from 'ejs';
 
 const environment = process.env.NODE_ENV;
-const dotenvFile = `.env.${environment}`;
 
+const dotenvFile = `.env`;
 dotenv.config({ path: dotenvFile });
 
+const dotenvNode = `.env.${environment}`;
+dotenv.config({ path: dotenvNode });
+
 const app = express();
+
+global.statusCode;
+global.statusMsg;
 
 const {
   PORT,
@@ -24,9 +32,11 @@ const {
   AUDD_TOKEN,
   SPOTIFY_ID,
   AUTH_TWITCH,
+  SESSION_NAME,
   AUTH_SPOTIFY,
   REDIRECT_URI,
   SPOTIFY_SECRET,
+  SESSION_SECRET,
 } = process.env;
 
 const URI_ENCODE = encodeURIComponent(REDIRECT_URI);
@@ -46,18 +56,29 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('ejs', ejs.__express);
 
 app.use(cors());
-app.use(morgan('common'));
+
+app.enable('trust proxy');
+app.disable('x-powered-by');
+
+app.use(session({
+  secret: SESSION_SECRET,
+  name: SESSION_NAME,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    maxAge: 10 * 676e9,
+  }
+}));
 
 app.use(express.json());
 app.use(express.static(__dirname));
 
+app.use(morgan('common'));
+
 app.get('/', (req, res) => {
   res.render('index', {
     title: TITLE
-  },
-  {
-    cache: true,
-    filename: 'index.ejs'
   });
 });
 
@@ -74,6 +95,9 @@ app.post('/', async (req, res, next) => {
       res.send({ tracks })
     }
   } catch (e) {
+    global.statusCode = 500;
+    global.statusMsg = e;
+
     console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
@@ -83,18 +107,21 @@ app.get('/auth/twitch', (req, res, next) => {
   try {
     res.redirect(TWITCH_URL);
   } catch (e) {
+    global.statusCode = 500;
+    global.statusMsg = e;
+
     console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
 
 app.get('/error', (req, res, next) => {
-  const statusCode = req.query.status;
-  const message = req.query.message;
+  global.statusCode = req.query.status;
+  global.statusMsg = req.query.message;
 
   res.render('error', {
     statusCode: statusCode,
-    message: message,
+    message: statusMsg,
   });
 });
 
@@ -104,13 +131,23 @@ app.get('/auth/twitch/callback', (req, res, next) => {
       const authCode = req.query.code;
       res.send({ login: true, code: authCode });
     } else {
-      res.redirect(`/error?status=500&message=authCode missing`);
+      next();
     }
-
   } catch (e) {
+    global.statusCode = 500;
+    global.statusMsg = e;
+
     console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=500&message=${e}`);
+    res.redirect(`/error?status=${statusCode}&message=${statusMsg}`);
   }
+}, (req, res, next) => {
+    global.statusCode = req.query.status;
+    global.statusMsg = req.query.message;
+
+    res.render('error', {
+      statusCode: statusCode,
+      message: statusMsg,
+  });
 });
 
 async function searchTracks(trackName) {
@@ -170,27 +207,27 @@ async function searchTracks(trackName) {
 // }
 
 app.get('/robots.txt', (req, res) => {
+  res.type("text/plain");
   res.sendFile(path.resolve('./public/robots.txt'));
 });
 
 app.get('/sitemap.xml', (req, res) => {
+  res.type("application/xml");
   res.sendFile(path.resolve('./public/sitemap.xml'));
 });
 
 app.get('*', (req, res) => {
-  res.render('404', {
-    cache: true,
-    filename: '404.ejs'
-  });
+  res.render('404');
 });
 
 app.listen(PORT, () => {
 
-  if (PORT && PORT !== '3000' && PORT !== '3939') {
+  if (!PORT) {
     console.error(`[error] incorrect port`.red);
     return;
   }
 
   console.debug(
-    `[server] Server started on ${HOST}`.toLowerCase().rainbow);
+    `[server] Server started on ${HOST}:${PORT}`.toLowerCase().rainbow
+  );
 });
