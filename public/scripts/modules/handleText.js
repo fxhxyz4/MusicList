@@ -1,3 +1,5 @@
+import { refs } from './refs.js';
+
 function handleText() {
   const bool = localStorage.getItem('_login');
   let btnTxt = '';
