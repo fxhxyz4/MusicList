@@ -1,14 +1,14 @@
 {
-	"presets": [
-		[
-			"@babel/preset-env",
-			{
-				"targets": {
-					"modules": "false",
-					"corejs": "3.32",
-					"node": "20"
-				}
-			}
-		]
-	]
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": {
+          "modules": "false",
+          "corejs": "3.32",
+          "node": "20"
+        }
+      }
+    ]
+  ]
 }
