@@ -39,6 +39,13 @@ $ npm run dev
 
 #
 
+### [ngrok](https://ngrok.com) for development
+```
+$ ngrok http port (3000 or other)
+```
+
+#
+
 ### production
 ```
 $ npm run prod
