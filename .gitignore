@@ -2,6 +2,7 @@
 .DS_Store
 text.txt
 global.css
+index.min.cjs.LICENSE.txt
 
 # Logs
 logs
