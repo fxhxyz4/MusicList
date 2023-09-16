@@ -4,7 +4,6 @@ import session from 'express-session';
 import express from 'express';
 import colors from 'colors';
 import morgan from 'morgan';
-import helmet from 'helmet';
 import axios from 'axios';
 import path from 'path';
 import cors from 'cors';
@@ -12,11 +11,8 @@ import ejs from 'ejs';
 
 const environment = process.env.NODE_ENV;
 
-const dotenvFile = `.env`;
-dotenv.config({ path: dotenvFile });
-
-const dotenvNode = `.env.${environment}`;
-dotenv.config({ path: dotenvNode });
+dotenv.config({ path: `.env` });
+dotenv.config({ path: `.env.${environment}` });
 
 const app = express();
 
