@@ -16,9 +16,6 @@ dotenv.config({ path: `.env.${environment}` });
 
 const app = express();
 
-global.statusCode;
-global.statusMsg;
-
 const {
   PORT,
   HOST,
@@ -53,7 +50,7 @@ app.engine('ejs', ejs.__express);
 
 app.use(cors());
 
-app.enable('trust proxy');
+app.enable('trust proxy', 1);
 app.disable('x-powered-by');
 
 app.use(session({
@@ -91,9 +88,6 @@ app.post('/', async (req, res, next) => {
       res.send({ tracks })
     }
   } catch (e) {
-    global.statusCode = 500;
-    global.statusMsg = e;
-
     console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
@@ -103,17 +97,14 @@ app.get('/auth/twitch', (req, res, next) => {
   try {
     res.redirect(TWITCH_URL);
   } catch (e) {
-    global.statusCode = 500;
-    global.statusMsg = e;
-
     console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
 
 app.get('/error', (req, res, next) => {
-  global.statusCode = req.query.status;
-  global.statusMsg = req.query.message;
+  let statusCode = req.query.status;
+  let statusMsg = req.query.message;
 
   res.render('error', {
     statusCode: statusCode,
@@ -130,15 +121,12 @@ app.get('/auth/twitch/callback', (req, res, next) => {
       next();
     }
   } catch (e) {
-    global.statusCode = 500;
-    global.statusMsg = e;
-
     console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=${statusCode}&message=${statusMsg}`);
+    res.redirect(`/error?status=500&message=${e}`);
   }
 }, (req, res, next) => {
-    global.statusCode = req.query.status;
-    global.statusMsg = req.query.message;
+  let statusCode = req.query.status;
+  let statusMsg = req.query.message;
 
     res.render('error', {
       statusCode: statusCode,
@@ -170,37 +158,11 @@ async function searchTracks(trackName) {
       });
 
       const tracks = await r.data.tracks;
-      const trackNames = tracks.items.map(item => item.name);
-
-      // const dmcaResults = await checkDMCA(trackNames);
-      // return dmcaResults;
-
       return tracks;
     } catch (e) {
       console.error(`[error] ${e}`.red);
     }
 }
-
-// async function checkDMCA(tracksName) {
-//   const MB_API_URL = 'https://musicbrainz.org/ws/2';
-
-//   try {
-//     const response = await axios.get(`${MB_API_URL}/recording`, {
-//       params: {
-//         query: tracksName,
-//         limit: 1,
-//         fmt: 'json',
-//       },
-//     });
-
-//     const recordings = response.data.recordings;
-//     console.log(recordings);
-
-//     return recordings;
-//   } catch (e) {
-//     console.error(`[error] ${e}`.red);
-//   }
-// }
 
 app.get('/robots.txt', (req, res) => {
   res.type("text/plain");
