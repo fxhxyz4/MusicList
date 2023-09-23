@@ -36,26 +36,6 @@ function renderElements(tracksObj) {
     img.classList.add('main__img');
     a.classList.add('main__link');
 
-      /*
-        *
-        @fix
-          img.onload = () => {
-            if (licenseArray.includes(t.name)) {
-              li.style.backgroundColor = `#fff`;
-              img.style.opacity = `0`;
-
-              a.style.opacity = `1`;
-              a.textContent = `DMCA`;
-
-              a.style.color = `red`;
-              a.style.fontSize = `24px`;
-
-              a.style.padding = `30px`;
-              a.style.fontWeight = `500`;
-            }
-          };
-      */
-
 		img.src = t.album.images[1].url;
 		img.alt = t.album.name;
 
