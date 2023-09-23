@@ -33,7 +33,7 @@
 	"license": "Apache-2.0",
 	"scripts": {
 		"dev": "NODE_ENV=development nodemon index.js -- --config",
-		"server": "NODE_ENV=production node index.min.cjs",
+		"server": "NODE_ENV=production node index.js",
 		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
 		"css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
 		"babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
