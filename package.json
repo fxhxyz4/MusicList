@@ -45,7 +45,7 @@
 		"webpack:prod": "webpack -c ./webpack.config.js"
 	},
 	"dependencies": {
-		"axios": "^1.4.0",
+		"axios": "^1.5.1",
 		"cors": "^2.8.5",
 		"css-minify": "^2.0.0",
 		"dotenv": "^16.3.1",
@@ -57,6 +57,7 @@
 		"@babel/cli": "^7.22.10",
 		"@babel/core": "^7.22.11",
 		"@babel/preset-env": "^7.22.20",
+		"@babel/core": "^7.23.0",
 		"babel-minify": "^0.5.2",
 		"colors": "^1.4.0",
 		"morgan": "^1.10.0",
