@@ -15,7 +15,7 @@
 	"main": "index.js",
 	"author": {
 		"name": "fxhxyz4",
-		"email": "fxhxyz@proton.me",
+		"email": "fxhsec@proton.me",
 		"url": "https://fxhxyz.vercel.app/"
 	},
 	"homepage": "https://music-list-lol.onrender.com/",
@@ -27,7 +27,7 @@
 	"maintainers": [
 		{
 			"name": "fxhxyz4",
-			"email": "fxhxyz@proton.me"
+			"email": "fxhsec@proton.me"
 		}
 	],
 	"license": "Apache-2.0",
