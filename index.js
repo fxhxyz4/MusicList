@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 
 import session from 'express-session';
 import express from 'express';
+import colors from 'colors';
 import morgan from 'morgan';
 import axios from 'axios';
 import path from 'path';
@@ -79,14 +80,14 @@ app.post('/', async (req, res, next) => {
 
   try {
     if (!trackName) {
-      console.error(`[error] trackName ${undefined} or ${null}`);
+      console.error(`[error] trackName ${undefined} or ${null}`.red);
       res.redirect(`/error?status=500&message=trackName ${undefined} or ${null}`);
     } else {
       tracks = await searchTracks(trackName);
       res.send({ tracks })
     }
   } catch (e) {
-    console.error(`[error] ${e}`);
+    console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
@@ -95,7 +96,7 @@ app.get('/auth/twitch', (req, res, next) => {
   try {
     res.redirect(TWITCH_URL);
   } catch (e) {
-    console.error(`[error] ${e}`);
+    console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
@@ -119,7 +120,7 @@ app.get('/auth/twitch/callback', (req, res, next) => {
       next();
     }
   } catch (e) {
-    console.error(`[error] ${e}`);
+    console.error(`[error] ${e}`.red);
     res.redirect(`/error?status=500&message=${e}`);
   }
 }, (req, res, next) => {
@@ -158,7 +159,7 @@ async function searchTracks(trackName) {
       const deepTracks = await r.data.tracks.items.filter(track => track.popularity < 15);
       return deepTracks;
     } catch (e) {
-      console.error(`[error] ${e}`);
+      console.error(`[error] ${e}`.red);
     }
 }
 
@@ -179,11 +180,17 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
 
   if (!PORT) {
-    console.error(`[error] incorrect port`);
+    console.error(`[error] incorrect port`.red);
     return;
   }
 
-  console.debug(
-    `[server] Server started on ${HOST}:${PORT}`.toLowerCase()
-  );
+  if (PORT === 3000) {
+    console.debug(
+      `[server] Server started on ${HOST}:${PORT}`.toLowerCase().rainbow
+    );
+  } else {
+    console.debug(
+      `[server] Server started on ${HOST}`.toLowerCase().rainbow
+    );
+  }
 });

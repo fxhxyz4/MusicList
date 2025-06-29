@@ -21,8 +21,6 @@ function renderElements(tracksObj) {
     refs.spinEl.classList.add('visually-hidden');
   }
 
-  console.log('tracksObj:', tracksObj);
-
   const trackItems =
     tracksObj?.tracks?.items || tracksObj?.items || tracksObj?.tracks || [];
 
