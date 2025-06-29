@@ -2,13 +2,14 @@ import dotenv from 'dotenv';
 
 import session from 'express-session';
 import express from 'express';
-import colors from 'colors';
+import pkg from 'colors';
 import morgan from 'morgan';
 import axios from 'axios';
 import path from 'path';
 import cors from 'cors';
 import ejs from 'ejs';
 
+const colors = pkg;
 const environment = process.env.NODE_ENV;
 
 dotenv.config({ path: `.env` });
