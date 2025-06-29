@@ -2,14 +2,12 @@ import dotenv from 'dotenv';
 
 import session from 'express-session';
 import express from 'express';
-import pkg from 'colors';
 import morgan from 'morgan';
 import axios from 'axios';
 import path from 'path';
 import cors from 'cors';
 import ejs from 'ejs';
 
-const colors = pkg;
 const environment = process.env.NODE_ENV;
 
 dotenv.config({ path: `.env` });
@@ -81,14 +79,14 @@ app.post('/', async (req, res, next) => {
 
   try {
     if (!trackName) {
-      console.error(`[error] trackName ${undefined} or ${null}`.red);
+      console.error(`[error] trackName ${undefined} or ${null}`);
       res.redirect(`/error?status=500&message=trackName ${undefined} or ${null}`);
     } else {
       tracks = await searchTracks(trackName);
       res.send({ tracks })
     }
   } catch (e) {
-    console.error(`[error] ${e}`.red);
+    console.error(`[error] ${e}`);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
@@ -97,7 +95,7 @@ app.get('/auth/twitch', (req, res, next) => {
   try {
     res.redirect(TWITCH_URL);
   } catch (e) {
-    console.error(`[error] ${e}`.red);
+    console.error(`[error] ${e}`);
     res.redirect(`/error?status=500&message=${e}`);
   }
 });
@@ -121,7 +119,7 @@ app.get('/auth/twitch/callback', (req, res, next) => {
       next();
     }
   } catch (e) {
-    console.error(`[error] ${e}`.red);
+    console.error(`[error] ${e}`);
     res.redirect(`/error?status=500&message=${e}`);
   }
 }, (req, res, next) => {
@@ -160,7 +158,7 @@ async function searchTracks(trackName) {
       const deepTracks = await r.data.tracks.items.filter(track => track.popularity < 15);
       return deepTracks;
     } catch (e) {
-      console.error(`[error] ${e}`.red);
+      console.error(`[error] ${e}`);
     }
 }
 
@@ -181,11 +179,11 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
 
   if (!PORT) {
-    console.error(`[error] incorrect port`.red);
+    console.error(`[error] incorrect port`);
     return;
   }
 
   console.debug(
-    `[server] Server started on ${HOST}:${PORT}`.toLowerCase().rainbow
+    `[server] Server started on ${HOST}:${PORT}`.toLowerCase()
   );
 });
