@@ -1,9 +1,9 @@
 <%
-  let host = process.env.HOST;
+  let host = process.env.HOST || 'http://127.0.0.1';
 	let desc = `NoDMCA searcher with spotify-api`;
 	let favicon_path = `../../public/images/favicon.ico`;
 
-  let css_dev_path = `../../public/styles/global.css`;
+  let css_dev_path = `../../public/styles/global.min.css`;
 	let css_prod_path = `../../public/styles/global.min.css?v1`;
 
   let css_path = process.env.NODE_ENV === 'production'
@@ -40,7 +40,7 @@
   <meta property="og:description" content="<%- desc -%>" />
   <meta property="og:image" content="<%- favicon_path -%>" />
   <meta property="og:image:alt" content="MusicList logo" />
-  <meta property="og:url" content="<%- host -%>" />
+  <meta property="og:url" content="<%- host || 'http://127.0.0.1' -%>" />
   <meta name="darkreader" content="NO-DARKREADER-PLUGIN" />
 	<meta name="robots" content="index, follow" />
 	<!-- /Meta -->
