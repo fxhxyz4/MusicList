@@ -1,70 +1,70 @@
 {
-	"name": "Music List",
-	"version": "1.0.0",
-	"description": "NoDMCA searcher with spotify-api",
-	"keywords": [
-		"ejs",
-		"spotify-api",
-		"express",
-		"javascript",
-		"babel",
-		"webpack",
-		"cors"
-	],
-	"type": "module",
-	"main": "index.js",
-	"author": {
-		"name": "fxhxyz4",
-		"email": "fxhsec@proton.me",
-		"url": "https://fxhxyz.vercel.app/"
-	},
-	"homepage": "https://music-list-lol.onrender.com/",
-	"bugs": "https://github.com/fxhxyz4/MusicList/issues",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/fxhxyz4/MusicList.git"
-	},
-	"maintainers": [
-		{
-			"name": "fxhxyz4",
-			"email": "fxhsec@proton.me"
-		}
-	],
-	"license": "Apache-2.0",
-	"scripts": {
-		"dev": "NODE_ENV=development nodemon index.js -- --config",
-		"server": "NODE_ENV=production node index.js",
-		"ejs": "ejs ./views/index.ejs -o ./public/index.html",
-		"css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
-		"babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
-		"webpack:watch": "webpack -c ./webpack.config.js -w",
-		"babel:minify": "minify public/out/*.js --outFile public/out/main.min.js",
-		"prod:css": "npm run css && npm run webpack:prod && npm run babel:prod && npm run babel:minify",
-		"prod": "npm run webpack:prod && npm run babel:prod && npm run babel:minify",
-		"babel:prod": "babel public/out/*.js -d public/out --presets=@babel/preset-env",
-		"webpack:prod": "webpack -c ./webpack.config.js"
-	},
-	"dependencies": {
-		"axios": "^1.5.1",
-		"cors": "^2.8.5",
-		"css-minify": "^2.0.0",
-		"dotenv": "^16.3.1",
-		"ejs": "^3.1.9",
-		"express": "^4.18.2",
-		"express-session": "^1.17.3"
-	},
-	"devDependencies": {
-		"@babel/cli": "^7.23.0",
-		"@babel/preset-env": "^7.23.2",
-		"@babel/core": "^7.23.2",
-		"babel-minify": "^0.5.2",
-		"colors": "^1.4.0",
-		"morgan": "^1.10.0",
-		"nodemon": "^3.0.1",
-		"webpack": "^5.89.0",
-		"webpack-cli": "^5.1.4"
-	},
-	"engines": {
-		"node": "20.x"
-	}
+  "name": "Music List",
+  "version": "1.0.0",
+  "description": "Depths of Spotify tracks",
+  "keywords": [
+    "ejs",
+    "spotify-api",
+    "express",
+    "javascript",
+    "babel",
+    "webpack",
+    "cors"
+  ],
+  "type": "module",
+  "main": "index.js",
+  "author": {
+    "name": "fxhxyz4",
+    "email": "fxhsec@proton.me",
+    "url": "https://fxhxyz.vercel.app/"
+  },
+  "homepage": "https://music-list-lol.onrender.com/",
+  "bugs": "https://github.com/fxhxyz4/MusicList/issues",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fxhxyz4/MusicList.git"
+  },
+  "maintainers": [
+    {
+      "name": "fxhxyz4",
+      "email": "fxhsec@proton.me"
+    }
+  ],
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon index.js -- --config",
+    "server": "NODE_ENV=production node index.js",
+    "ejs": "ejs ./views/index.ejs -o ./public/index.html",
+    "css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
+    "babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
+    "webpack:watch": "webpack -c ./webpack.config.js -w",
+    "babel:minify": "minify public/out/*.js --outFile public/out/main.min.js",
+    "prod:css": "npm run css && npm run webpack:prod && npm run babel:prod && npm run babel:minify",
+    "prod": "npm run webpack:prod && npm run babel:prod && npm run babel:minify",
+    "babel:prod": "babel public/out/*.js -d public/out --presets=@babel/preset-env",
+    "webpack:prod": "webpack -c ./webpack.config.js"
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "css-minify": "^2.0.0",
+    "dotenv": "^17.0.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.27.2",
+    "@babel/core": "^7.27.7",
+    "@babel/preset-env": "^7.27.2",
+    "babel-minify": "^0.2.0",
+    "colors": "^1.4.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^3.1.10",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
+  },
+  "engines": {
+    "node": "22.x"
+  }
 }
