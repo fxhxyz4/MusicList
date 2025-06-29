@@ -35,7 +35,7 @@
     "dev": "NODE_ENV=development nodemon index.js -- --config",
     "server": "NODE_ENV=production node index.js",
     "ejs": "ejs ./views/index.ejs -o ./public/index.html",
-    "css": "css-minify -f ./public/styles/global.css -o ./public/styles/",
+    "css": "css-minify -f ./public/styles/global.css -o ./public/styles/ && rm ./public/styles/global.css",
     "babel:watch": "babel public/out/*.js -d public/out --presets=@babel/preset-env -w",
     "webpack:watch": "webpack -c ./webpack.config.js -w",
     "babel:minify": "minify public/out/*.js --outFile public/out/main.min.js",
