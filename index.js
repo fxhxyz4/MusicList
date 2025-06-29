@@ -156,7 +156,7 @@ async function searchTracks(trackName) {
         },
       });
 
-      const deepTracks = await r.data.tracks.items.filter(track => track.popularity < 15);
+      const deepTracks = await r.data.tracks.items.filter(track => track.popularity < 20);
       return deepTracks;
     } catch (e) {
       console.error(`[error] ${e}`.red);
