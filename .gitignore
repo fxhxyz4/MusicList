@@ -1,4 +1,7 @@
-# misc
+# Misc
+index.min.cjs
+public/out/
+package-lock.json
 .DS_Store
 text.txt
 global.css
