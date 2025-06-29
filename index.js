@@ -20,9 +20,8 @@ const {
   PORT,
   HOST,
   TITLE,
-  AUDD_URI,
+  NODE_ENV,
   TWITCH_ID,
-  AUDD_TOKEN,
   SPOTIFY_ID,
   AUTH_TWITCH,
   SESSION_NAME,
@@ -149,7 +148,7 @@ async function searchTracks(trackName) {
 	const token = await r.data.access_token;
 
     try {
-      const r = await axios(`https://api.spotify.com/v1/search?type=track&q=${trackName}&limit=15`, {
+      const r = await axios(`https://api.spotify.com/v1/search?type=track&q=${trackName}&limit=50`, {
         method: 'get',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -157,8 +156,8 @@ async function searchTracks(trackName) {
         },
       });
 
-      const tracks = await r.data.tracks;
-      return tracks;
+      const deepTracks = await r.data.tracks.items.filter(track => track.popularity < 15);
+      return deepTracks;
     } catch (e) {
       console.error(`[error] ${e}`.red);
     }
