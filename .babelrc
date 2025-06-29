@@ -5,8 +5,8 @@
       {
         "targets": {
           "modules": "false",
-          "corejs": "3.32",
-          "node": "20"
+          "corejs": "3.43",
+          "node": "22"
         }
       }
     ]
