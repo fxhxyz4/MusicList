@@ -64,7 +64,7 @@ export function handleText() {
     if (svgIcon) svgIcon.style.display = "none";
 
     if (hideIcon) {
-      textSpan.textContent = "";
+      textSpan.textContent = username;
       return;
     }
 
@@ -84,7 +84,7 @@ export function handleText() {
         </span>
       `;
     } else {
-      textSpan.textContent = displayName || username;
+      textSpan.textContent = displayName || username || "Logged in";
     }
   }
 
