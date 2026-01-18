@@ -1,10 +1,10 @@
 <%
   let host = process.env.HOST || 'http://127.0.0.1';
 	let desc = `NoDMCA searcher with spotify-api`;
-	let favicon_path = `../../public/images/favicon.ico`;
+	let favicon_path = `images/favicon.ico`;
 
-  let css_dev_path = `../../public/styles/global.min.css`;
-	let css_prod_path = `../../public/styles/global.min.css?v1`;
+  let css_dev_path = `styles/global.min.css`;
+	let css_prod_path = `styles/global.min.css?v1`;
 
   let css_path = process.env.NODE_ENV === 'production'
     ? css_prod_path
