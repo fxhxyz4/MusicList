@@ -117,7 +117,68 @@ app.get('/auth/twitch/callback', (req, res) => {
   try {
     if (req.query.code) {
       const authCode = req.query.code;
-      return res.json({ login: true, code: authCode });
+
+      // Send HTML that posts message to opener window and closes
+      return res.send(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Authentication Successful</title>
+          <style>
+            body {
+              font-family: 'Roboto', sans-serif;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100vh;
+              margin: 0;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+            }
+            .container {
+              text-align: center;
+            }
+            .spinner {
+              width: 50px;
+              height: 50px;
+              border: 5px solid rgba(255,255,255,0.3);
+              border-top-color: white;
+              border-radius: 50%;
+              animation: spin 1s linear infinite;
+              margin: 20px auto;
+            }
+            @keyframes spin {
+              to { transform: rotate(360deg); }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h2>✓ Authentication successful!</h2>
+            <div class="spinner"></div>
+            <p>Closing window...</p>
+          </div>
+          <script>
+            (function() {
+              if (window.opener && !window.opener.closed) {
+                window.opener.postMessage({
+                  type: 'TWITCH_AUTH_SUCCESS',
+                  login: true,
+                  code: '${authCode}'
+                }, window.location.origin);
+
+                setTimeout(() => {
+                  window.close();
+                }, 500);
+              } else {
+                document.querySelector('.container').innerHTML =
+                  '<h2>✓ Authentication successful!</h2><p>You can close this window.</p>';
+              }
+            })();
+          </script>
+        </body>
+        </html>
+      `);
     }
 
     const statusCode = req.query.status || 400;

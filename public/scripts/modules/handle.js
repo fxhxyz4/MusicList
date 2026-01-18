@@ -1,46 +1,30 @@
 import { handleText } from "./handleText.js";
 
 function handleCallback() {
-  const popup = window.open("/auth/twitch");
+  const popup = window.open("/auth/twitch", "TwitchAuth", "width=600,height=700");
+  window.addEventListener("message", handleAuthMessage, false);
 
   const interval = setInterval(() => {
     if (popup.closed) {
       clearInterval(interval);
-    } else {
-      try {
-        if (popup.location.href.includes("/auth/twitch/callback")) {
-          const url = new URL(popup.location.href);
-          const authCode = url.searchParams.get("code");
-
-          popup.close();
-          fetchData(authCode);
-        }
-      } catch (e) {
-        console.error(e);
-      }
+      window.removeEventListener("message", handleAuthMessage);
     }
-  }, 1e3);
+  }, 1000);
 }
 
-async function fetchData(authCode) {
-  try {
-    const res = await fetch(`/auth/twitch/callback?code=${authCode}`, {
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
+function handleAuthMessage(event) {
+  if (event.origin !== window.location.origin) {
+    return;
+  }
 
-    const { login, code } = await res.json();
+  if (event.data.type === "TWITCH_AUTH_SUCCESS") {
+    const { code, login } = event.data;
 
-    if (login) {
+    if (login && code) {
       localStorage.setItem("_code", code);
       localStorage.setItem("_login", login);
-
       handleText();
     }
-  } catch (e) {
-    console.error(e);
   }
 }
 
