@@ -1,8 +1,8 @@
 {
-	"recommendations": [
-		"digitalbrainstem.javascript-ejs-support",
-		"zaczero.bootstrap-v4-snippets",
-		"anbuselvanrocky.bootstrap5-vscode",
-		"webben.browserslist"
-	]
+  "recommendations": [
+    "digitalbrainstem.javascript-ejs-support",
+    "zaczero.bootstrap-v4-snippets",
+    "anbuselvanrocky.bootstrap5-vscode",
+    "webben.browserslist"
+  ]
 }

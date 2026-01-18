@@ -1,10 +1,10 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: '/'
+    directory: "/"
     schedule:
       interval: daily
-      time: '00:00'
+      time: "00:00"
     open-pull-requests-limit: 15
     reviewers:
       - fxhxyz4

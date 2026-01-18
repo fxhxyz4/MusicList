@@ -1,48 +1,55 @@
-import { handleText } from './handleText.js';
+import { handleText } from "./handleText.js";
 
 function handleCallback() {
-  const popup = window.open('/auth/twitch');
+  console.log('🔵 Opening Twitch login...');
 
-  const interval = setInterval(() => {
-    if (popup.closed) {
-      clearInterval(interval);
-    } else {
-      try {
-        if (popup.location.href.includes('/auth/twitch/callback')) {
-          const url = new URL(popup.location.href);
-          const authCode = url.searchParams.get('code');
+  const popup = window.open(
+    "/auth/twitch",
+    "TwitchAuth",
+    "width=600,height=700"
+  );
 
-          popup.close();
-          fetchData(authCode);
-        }
-      } catch (e) {
-        console.error(e);
-      }
+  if (!popup) {
+    alert('Popup blocked! Please allow popups for this site.');
+    return;
+  }
+
+  const messageHandler = (event) => {
+    console.log('🔵 Message received:', event.data);
+
+    if (event.origin !== window.location.origin) {
+      console.warn('❌ Wrong origin:', event.origin);
+      return;
     }
-  }, 1e3);
-}
 
-async function fetchData(authCode) {
-  try {
-    const res = await fetch(`/auth/twitch/callback?code=${authCode}`, {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
+    if (event.data.type === 'TWITCH_AUTH_SUCCESS') {
+      console.log('✅ Auth successful!');
 
-    const { login, code } = await res.json();
+      const user = event.data.user;
 
-    if (login) {
-      localStorage.setItem('_code', code);
-      localStorage.setItem('_login', login);
+      localStorage.setItem("_login", "true");
+      localStorage.setItem("_username", user.username);
+      localStorage.setItem("_displayName", user.displayName);
+      localStorage.setItem("_profileImage", user.profileImage);
+      localStorage.setItem("_userId", user.id);
+
+      console.log('💾 Data saved:', user);
 
       handleText();
-    }
-  } catch (e) {
-    console.error(e);
-  }
-}
 
+      window.removeEventListener("message", messageHandler);
+    }
+  };
+
+  window.addEventListener("message", messageHandler);
+
+  const checkClosed = setInterval(() => {
+    if (popup.closed) {
+      console.log('🔵 Popup closed');
+      clearInterval(checkClosed);
+      window.removeEventListener("message", messageHandler);
+    }
+  }, 1000);
+}
 
 export { handleCallback };
