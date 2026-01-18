@@ -118,7 +118,6 @@ app.get('/auth/twitch/callback', (req, res) => {
     if (req.query.code) {
       const authCode = req.query.code;
 
-      // Send HTML that posts message to opener window and closes
       return res.send(`
         <!DOCTYPE html>
         <html>
@@ -161,16 +160,19 @@ app.get('/auth/twitch/callback', (req, res) => {
           <script>
             (function() {
               if (window.opener && !window.opener.closed) {
+                // Send message to parent window
                 window.opener.postMessage({
                   type: 'TWITCH_AUTH_SUCCESS',
                   login: true,
                   code: '${authCode}'
                 }, window.location.origin);
 
+                // Close popup after small delay
                 setTimeout(() => {
                   window.close();
                 }, 500);
               } else {
+                // Fallback if no opener
                 document.querySelector('.container').innerHTML =
                   '<h2>✓ Authentication successful!</h2><p>You can close this window.</p>';
               }
@@ -236,12 +238,10 @@ app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.resolve(publicPath, 'sitemap.xml'));
 });
 
-// 404 handler - MUST be after all other routes
 app.use((req, res) => {
   res.status(404).render('404');
 });
 
-// Error handling middleware (Express 5)
 app.use((err, req, res, next) => {
   console.error(`[error] ${err.stack}`.red);
   res.status(err.status || 500).render('error', {
