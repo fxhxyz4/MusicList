@@ -1,24 +1,49 @@
 export function handleText() {
-  let loginButton = document.querySelector(".nav-auth__link");
+  const loginButton = document.querySelector(".nav-auth__link");
+  if (!loginButton) return;
+
+  const textSpan = loginButton.querySelector(".nav-auth__text");
+
   const username = localStorage.getItem("_username");
   const displayName = localStorage.getItem("_displayName");
-
   const profileImage = localStorage.getItem("_profileImage");
 
-  loginButton.textContent = "Login";
+  const mq = window.matchMedia("(max-width: 1400px)");
 
-  if (username) {
-    loginButton = document.querySelector(".nav-auth__link");
+  function renderText() {
+    const isCompact = mq.matches;
 
-    if (loginButton) {
-      loginButton.textContent = displayName || username;
+    if (!username) {
+      textSpan.textContent = isCompact ? "Login" : "Login with Twitch";
+      return;
+    }
 
-      if (profileImage) {
-        loginButton.innerHTML = `
-          <img src="${profileImage}" alt="${username}" style="width: 30px; border-radius: 50%;">
-          <span>${displayName || username}</span>
-        `;
-      }
+    if (isCompact) {
+      textSpan.textContent = "Login";
+      return;
+    }
+
+    if (profileImage) {
+      textSpan.innerHTML = `
+        <img src="${profileImage}"
+             alt="${username}"
+             style="
+               width:20px;
+               height:20px;
+               border-radius:50%;
+               margin-right:6px;
+               vertical-align:middle;
+             ">
+        <span style="font-weight:600;">
+          ${displayName || username}
+        </span>
+      `;
+    } else {
+      textSpan.textContent = displayName || username;
     }
   }
+
+  renderText();
+
+  mq.addEventListener("change", renderText);
 }
