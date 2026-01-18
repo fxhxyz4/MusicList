@@ -26,6 +26,7 @@ const {
   TITLE,
   NODE_ENV,
   TWITCH_ID,
+  TWITCH_SECRET,
   SPOTIFY_ID,
   AUTH_TWITCH,
   SESSION_NAME,
@@ -36,7 +37,7 @@ const {
 } = process.env;
 
 const URI_ENCODE = encodeURIComponent(REDIRECT_URI);
-const TWITCH_URL = `${AUTH_TWITCH}?response_type=code&redirect_uri=${URI_ENCODE}&client_id=${TWITCH_ID}`;
+const TWITCH_URL = `${AUTH_TWITCH}?response_type=code&redirect_uri=${URI_ENCODE}&client_id=${TWITCH_ID}&scope=user:read:email`;
 
 const authParams = `${SPOTIFY_ID}:${SPOTIFY_SECRET}`;
 const encodedAuthParams = Buffer.from(authParams).toString('base64');
@@ -61,15 +62,16 @@ app.use(
     saveUninitialized: true,
     cookie: {
       secure: false,
-      maxAge: 10 * 60 * 60 * 1000, // 10 hours
+      maxAge: 10 * 60 * 60 * 1000,
     },
   })
 );
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(publicPath));
 
-app.use(morgan('common'));
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
   res.render('index', {
@@ -82,25 +84,21 @@ app.post('/', async (req, res) => {
 
   try {
     if (!trackName) {
-      console.error(`[error] trackName ${undefined} or ${null}`.red);
-      return res.redirect(`/error?status=500&message=trackName is undefined or null`);
+      console.error(`[error] trackName is undefined or null`.red);
+      return res.status(400).json({ error: 'Track name is required' });
     }
 
     const tracks = await searchTracks(trackName);
     res.json({ tracks });
   } catch (e) {
     console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=500&message=${encodeURIComponent(e.message)}`);
+    res.status(500).json({ error: e.message });
   }
 });
 
 app.get('/auth/twitch', (req, res) => {
-  try {
-    res.redirect(TWITCH_URL);
-  } catch (e) {
-    console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=500&message=${encodeURIComponent(e.message)}`);
-  }
+  console.log('[info] Redirecting to Twitch...'.blue);
+  res.redirect(TWITCH_URL);
 });
 
 app.get('/error', (req, res) => {
@@ -113,11 +111,54 @@ app.get('/error', (req, res) => {
   });
 });
 
-app.get('/auth/twitch/callback', (req, res) => {
+// Twitch callback - получает код авторизации
+app.get('/auth/twitch/callback', async (req, res) => {
   try {
-    if (req.query.code) {
-      const authCode = req.query.code;
+    const authCode = req.query.code;
 
+    if (!authCode) {
+      return res.status(400).render('error', {
+        statusCode: 400,
+        message: 'No authorization code provided',
+      });
+    }
+
+    console.log('[info] Auth code received:'.green, authCode.substring(0, 10) + '...');
+
+    // Сразу обменять код на токен и получить данные пользователя
+    try {
+      // Получить access token
+      const tokenResponse = await axios.post(
+        'https://id.twitch.tv/oauth2/token',
+        new URLSearchParams({
+          client_id: TWITCH_ID,
+          client_secret: TWITCH_SECRET,
+          code: authCode,
+          grant_type: 'authorization_code',
+          redirect_uri: REDIRECT_URI,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+
+      const accessToken = tokenResponse.data.access_token;
+      console.log('[info] Access token received'.green);
+
+      // Получить данные пользователя
+      const userResponse = await axios.get('https://api.twitch.tv/helix/users', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Client-Id': TWITCH_ID,
+        },
+      });
+
+      const userData = userResponse.data.data[0];
+      console.log('[info] User data received:'.green, userData.login);
+
+      // Вернуть HTML который закроет popup и передаст данные
       return res.send(`
         <!DOCTYPE html>
         <html>
@@ -153,26 +194,29 @@ app.get('/auth/twitch/callback', (req, res) => {
         </head>
         <body>
           <div class="container">
-            <h2>✓ Authentication successful!</h2>
+            <h2>✓ Welcome ${userData.display_name}!</h2>
             <div class="spinner"></div>
             <p>Closing window...</p>
           </div>
           <script>
             (function() {
+              const userData = {
+                username: '${userData.login}',
+                displayName: '${userData.display_name}',
+                profileImage: '${userData.profile_image_url}',
+                id: '${userData.id}'
+              };
+
               if (window.opener && !window.opener.closed) {
-                // Send message to parent window
                 window.opener.postMessage({
                   type: 'TWITCH_AUTH_SUCCESS',
-                  login: true,
-                  code: '${authCode}'
+                  user: userData
                 }, window.location.origin);
 
-                // Close popup after small delay
                 setTimeout(() => {
                   window.close();
-                }, 500);
+                }, 1000);
               } else {
-                // Fallback if no opener
                 document.querySelector('.container').innerHTML =
                   '<h2>✓ Authentication successful!</h2><p>You can close this window.</p>';
               }
@@ -181,18 +225,19 @@ app.get('/auth/twitch/callback', (req, res) => {
         </body>
         </html>
       `);
+    } catch (apiError) {
+      console.error('[error] Twitch API error:'.red, apiError.response?.data || apiError.message);
+      return res.status(500).render('error', {
+        statusCode: 500,
+        message: 'Failed to authenticate with Twitch',
+      });
     }
-
-    const statusCode = req.query.status || 400;
-    const statusMsg = req.query.message || 'No authorization code provided';
-
-    res.status(statusCode).render('error', {
-      statusCode,
-      message: statusMsg,
-    });
   } catch (e) {
     console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=500&message=${encodeURIComponent(e.message)}`);
+    res.status(500).render('error', {
+      statusCode: 500,
+      message: e.message,
+    });
   }
 });
 
@@ -238,10 +283,12 @@ app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.resolve(publicPath, 'sitemap.xml'));
 });
 
+// 404 handler
 app.use((req, res) => {
   res.status(404).render('404');
 });
 
+// Error handler
 app.use((err, req, res, next) => {
   console.error(`[error] ${err.stack}`.red);
   res.status(err.status || 500).render('error', {
@@ -256,9 +303,14 @@ app.listen(PORT, () => {
     return;
   }
 
-  if (PORT === '3000') {
-    console.debug(`[server] Server started on ${HOST}:${PORT}`.toLowerCase().rainbow);
-  } else {
-    console.debug(`[server] Server started on ${HOST}`.toLowerCase().rainbow);
+  console.log('');
+  console.log('═══════════════════════════════════════'.cyan);
+  console.log(`  🚀 Server running`.green);
+  console.log(`  📍 Local:   http://localhost:${PORT}`.blue);
+  if (HOST && !HOST.includes('localhost')) {
+    console.log(`  🌍 Remote:  ${HOST}`.blue);
   }
+  console.log(`  🔧 Mode:    ${NODE_ENV || 'development'}`.yellow);
+  console.log('═══════════════════════════════════════'.cyan);
+  console.log('');
 });

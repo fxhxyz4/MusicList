@@ -1,57 +1,62 @@
 import { handleText } from "./handleText.js";
 
 function handleCallback() {
+  console.log('🔵 Opening Twitch login...');
+
   const popup = window.open(
     "/auth/twitch",
     "TwitchAuth",
-    "width=600,height=700",
+    "width=600,height=700"
   );
 
-  window.addEventListener("message", handleAuthMessage, false);
-
-  const interval = setInterval(() => {
-    if (popup.closed) {
-      clearInterval(interval);
-      window.removeEventListener("message", handleAuthMessage);
-    }
-  }, 1000);
-}
-
-async function handleAuthMessage(event) {
-  if (event.origin !== window.location.origin) {
+  if (!popup) {
+    alert('Popup blocked! Please allow popups for this site.');
     return;
   }
 
-  if (event.data.type === "TWITCH_AUTH_SUCCESS") {
-    const { code, login } = event.data;
+  // Слушаем сообщения от popup
+  const messageHandler = (event) => {
+    console.log('🔵 Message received:', event.data);
 
-    if (login && code) {
-      try {
-        const response = await fetch("/auth/twitch/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ code }),
-        });
-
-        const userData = await response.json();
-
-        if (userData.username) {
-          localStorage.setItem("_code", code);
-          localStorage.setItem("_login", "true");
-
-          localStorage.setItem("_username", userData.username);
-          localStorage.setItem("_displayName", userData.displayName);
-
-          localStorage.setItem("_profileImage", userData.profileImage);
-          handleText();
-        }
-      } catch (error) {
-        console.error("Failed to fetch user data:", error);
-      }
+    // Проверка origin
+    if (event.origin !== window.location.origin) {
+      console.warn('❌ Wrong origin:', event.origin);
+      return;
     }
-  }
+
+    // Проверка типа сообщения
+    if (event.data.type === 'TWITCH_AUTH_SUCCESS') {
+      console.log('✅ Auth successful!');
+
+      const user = event.data.user;
+
+      // Сохраняем данные
+      localStorage.setItem("_login", "true");
+      localStorage.setItem("_username", user.username);
+      localStorage.setItem("_displayName", user.displayName);
+      localStorage.setItem("_profileImage", user.profileImage);
+      localStorage.setItem("_userId", user.id);
+
+      console.log('💾 Data saved:', user);
+
+      // Обновляем UI
+      handleText();
+
+      // Удаляем слушатель
+      window.removeEventListener("message", messageHandler);
+    }
+  };
+
+  window.addEventListener("message", messageHandler);
+
+  // Проверяем закрытие popup
+  const checkClosed = setInterval(() => {
+    if (popup.closed) {
+      console.log('🔵 Popup closed');
+      clearInterval(checkClosed);
+      window.removeEventListener("message", messageHandler);
+    }
+  }, 1000);
 }
 
 export { handleCallback };
