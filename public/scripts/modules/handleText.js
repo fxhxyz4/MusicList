@@ -48,8 +48,8 @@ export function handleText() {
   });
 
   function render() {
-    const compactText = mqText.matches;
-    const hideIcon = mqIcon.matches;
+    const compactText = mqText.matches; // ≤ 1400
+    const hideIcon = mqIcon.matches;    // ≤ 1200
 
     if (!username) {
       textSpan.textContent = compactText ? "Login" : "Login with Twitch";
@@ -62,8 +62,10 @@ export function handleText() {
     }
 
     if (svgIcon) svgIcon.style.display = "none";
-    if (compactText) {
+
+    if (hideIcon) {
       textSpan.textContent = "";
+      return;
     }
 
     if (profileImage) {
