@@ -1,7 +1,11 @@
 import { handleText } from "./handleText.js";
 
 function handleCallback() {
-  const popup = window.open("/auth/twitch", "TwitchAuth", "width=600,height=700");
+  const popup = window.open(
+    "/auth/twitch",
+    "TwitchAuth",
+    "width=600,height=700",
+  );
 
   window.addEventListener("message", handleAuthMessage, false);
 
@@ -23,10 +27,10 @@ async function handleAuthMessage(event) {
 
     if (login && code) {
       try {
-        const response = await fetch('/auth/twitch/user', {
-          method: 'POST',
+        const response = await fetch("/auth/twitch/user", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ code }),
         });
@@ -44,7 +48,7 @@ async function handleAuthMessage(event) {
           handleText();
         }
       } catch (error) {
-        console.error('Failed to fetch user data:', error);
+        console.error("Failed to fetch user data:", error);
       }
     }
   }

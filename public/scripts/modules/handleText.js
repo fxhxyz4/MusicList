@@ -5,7 +5,7 @@ export function handleText() {
   const profileImage = localStorage.getItem("_profileImage");
 
   if (username) {
-    const loginButton = document.querySelector('.login-button');
+    const loginButton = document.querySelector(".login-button");
 
     if (loginButton) {
       loginButton.textContent = displayName || username;
