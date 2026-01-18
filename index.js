@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-
 import session from 'express-session';
 import express from 'express';
 import colors from 'colors';
@@ -8,6 +7,11 @@ import axios from 'axios';
 import path from 'path';
 import cors from 'cors';
 import ejs from 'ejs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const environment = process.env.NODE_ENV;
 
@@ -32,15 +36,12 @@ const {
 } = process.env;
 
 const URI_ENCODE = encodeURIComponent(REDIRECT_URI);
-const TWITCH_URL = `${AUTH_TWITCH}?response_type=code&redirect_uri=${URI_ENCODE}&client_id=${TWITCH_ID}`
+const TWITCH_URL = `${AUTH_TWITCH}?response_type=code&redirect_uri=${URI_ENCODE}&client_id=${TWITCH_ID}`;
 
 const authParams = `${SPOTIFY_ID}:${SPOTIFY_SECRET}`;
 const encodedAuthParams = Buffer.from(authParams).toString('base64');
 
-const publicPath = `./public/`;
-const __dirname = path.dirname(publicPath);
-
-const requestBody = new URLSearchParams();
+const publicPath = path.join(__dirname, 'public');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -49,148 +50,154 @@ app.engine('ejs', ejs.__express);
 
 app.use(cors());
 
-app.enable('trust proxy', 1);
+app.set('trust proxy', 1);
 app.disable('x-powered-by');
 
-app.use(session({
-  secret: SESSION_SECRET,
-  name: SESSION_NAME,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    secure: false,
-    maxAge: 10 * 676e9,
-  }
-}));
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    name: SESSION_NAME,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false,
+      maxAge: 10 * 60 * 60 * 1000, // 10 hours
+    },
+  })
+);
 
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static(publicPath));
 
 app.use(morgan('common'));
 
 app.get('/', (req, res) => {
   res.render('index', {
-    title: TITLE
+    title: TITLE,
   });
 });
 
-app.post('/', async (req, res, next) => {
+app.post('/', async (req, res) => {
   const trackName = req.body.track;
-  let tracks;
 
   try {
     if (!trackName) {
       console.error(`[error] trackName ${undefined} or ${null}`.red);
-      res.redirect(`/error?status=500&message=trackName ${undefined} or ${null}`);
-    } else {
-      tracks = await searchTracks(trackName);
-      res.send({ tracks })
+      return res.redirect(`/error?status=500&message=trackName is undefined or null`);
     }
+
+    const tracks = await searchTracks(trackName);
+    res.json({ tracks });
   } catch (e) {
     console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=500&message=${e}`);
+    res.redirect(`/error?status=500&message=${encodeURIComponent(e.message)}`);
   }
 });
 
-app.get('/auth/twitch', (req, res, next) => {
+app.get('/auth/twitch', (req, res) => {
   try {
     res.redirect(TWITCH_URL);
   } catch (e) {
     console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=500&message=${e}`);
+    res.redirect(`/error?status=500&message=${encodeURIComponent(e.message)}`);
   }
 });
 
-app.get('/error', (req, res, next) => {
-  let statusCode = req.query.status;
-  let statusMsg = req.query.message;
+app.get('/error', (req, res) => {
+  const statusCode = req.query.status || 500;
+  const statusMsg = req.query.message || 'Unknown error';
 
-  res.render('error', {
-    statusCode: statusCode,
+  res.status(statusCode).render('error', {
+    statusCode,
     message: statusMsg,
   });
 });
 
-app.get('/auth/twitch/callback', (req, res, next) => {
+app.get('/auth/twitch/callback', (req, res) => {
   try {
     if (req.query.code) {
       const authCode = req.query.code;
-      res.send({ login: true, code: authCode });
-    } else {
-      next();
+      return res.json({ login: true, code: authCode });
     }
+
+    const statusCode = req.query.status || 400;
+    const statusMsg = req.query.message || 'No authorization code provided';
+
+    res.status(statusCode).render('error', {
+      statusCode,
+      message: statusMsg,
+    });
   } catch (e) {
     console.error(`[error] ${e}`.red);
-    res.redirect(`/error?status=500&message=${e}`);
+    res.redirect(`/error?status=500&message=${encodeURIComponent(e.message)}`);
   }
-}, (req, res, next) => {
-  let statusCode = req.query.status;
-  let statusMsg = req.query.message;
-
-    res.render('error', {
-      statusCode: statusCode,
-      message: statusMsg,
-  });
 });
 
 async function searchTracks(trackName) {
+  const requestBody = new URLSearchParams();
   requestBody.append('grant_type', 'client_credentials');
 
-  const r = await axios(`${AUTH_SPOTIFY}?`, {
-		method: 'post',
-		headers: {
-			Authorization: `Basic ${encodedAuthParams}`,
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
-		data: requestBody.toString(),
-	});
+  try {
+    const authResponse = await axios.post(AUTH_SPOTIFY, requestBody.toString(), {
+      headers: {
+        Authorization: `Basic ${encodedAuthParams}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
 
-	const token = await r.data.access_token;
+    const token = authResponse.data.access_token;
 
-    try {
-      const r = await axios(`https://api.spotify.com/v1/search?type=track&q=${trackName}&limit=50`, {
-        method: 'get',
+    const searchResponse = await axios.get(
+      `https://api.spotify.com/v1/search?type=track&q=${encodeURIComponent(trackName)}&limit=50`,
+      {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-      });
+      }
+    );
 
-      const deepTracks = await r.data.tracks.items.filter(track => track.popularity < 20);
-      return deepTracks;
-    } catch (e) {
-      console.error(`[error] ${e}`.red);
-    }
+    const deepTracks = searchResponse.data.tracks.items.filter(track => track.popularity < 20);
+    return deepTracks;
+  } catch (e) {
+    console.error(`[error] ${e}`.red);
+    throw e;
+  }
 }
 
 app.get('/robots.txt', (req, res) => {
-  res.type("text/plain");
-  res.sendFile(path.resolve('./public/robots.txt'));
+  res.type('text/plain');
+  res.sendFile(path.resolve(publicPath, 'robots.txt'));
 });
 
 app.get('/sitemap.xml', (req, res) => {
-  res.type("application/xml");
-  res.sendFile(path.resolve('./public/sitemap.xml'));
+  res.type('application/xml');
+  res.sendFile(path.resolve(publicPath, 'sitemap.xml'));
 });
 
-app.get('*', (req, res) => {
-  res.render('404');
+// 404 handler - MUST be after all other routes
+app.use((req, res) => {
+  res.status(404).render('404');
+});
+
+// Error handling middleware (Express 5)
+app.use((err, req, res, next) => {
+  console.error(`[error] ${err.stack}`.red);
+  res.status(err.status || 500).render('error', {
+    statusCode: err.status || 500,
+    message: err.message || 'Internal Server Error',
+  });
 });
 
 app.listen(PORT, () => {
-
   if (!PORT) {
     console.error(`[error] incorrect port`.red);
     return;
   }
 
-  if (PORT === 3000) {
-    console.debug(
-      `[server] Server started on ${HOST}:${PORT}`.toLowerCase().rainbow
-    );
+  if (PORT === '3000') {
+    console.debug(`[server] Server started on ${HOST}:${PORT}`.toLowerCase().rainbow);
   } else {
-    console.debug(
-      `[server] Server started on ${HOST}`.toLowerCase().rainbow
-    );
+    console.debug(`[server] Server started on ${HOST}`.toLowerCase().rainbow);
   }
 });
