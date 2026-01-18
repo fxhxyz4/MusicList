@@ -1,11 +1,14 @@
 export function handleText() {
+  let loginButton = document.querySelector(".nav-auth__link");
   const username = localStorage.getItem("_username");
   const displayName = localStorage.getItem("_displayName");
 
   const profileImage = localStorage.getItem("_profileImage");
 
+  loginButton.textContent = "Login";
+
   if (username) {
-    const loginButton = document.querySelector(".nav-auth__link");
+    loginButton = document.querySelector(".nav-auth__link");
 
     if (loginButton) {
       loginButton.textContent = displayName || username;
