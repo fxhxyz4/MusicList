@@ -57,11 +57,6 @@ export function handleText() {
 
     if (svgIcon) svgIcon.style.display = "none";
 
-    if (isCompact) {
-      textSpan.textContent = "Login";
-      return;
-    }
-
     if (profileImage) {
       textSpan.innerHTML = `
         <img src="${profileImage}"
