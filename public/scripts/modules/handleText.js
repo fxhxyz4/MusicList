@@ -3,6 +3,7 @@ export function handleText() {
   if (!loginButton) return;
 
   const textSpan = loginButton.querySelector(".nav-auth__text");
+  const svgIcon = loginButton.querySelector(".nav-auth__icon");
 
   const username = localStorage.getItem("_username");
   const displayName = localStorage.getItem("_displayName");
@@ -10,13 +11,15 @@ export function handleText() {
 
   const mq = window.matchMedia("(max-width: 1400px)");
 
-  function renderText() {
+  function render() {
     const isCompact = mq.matches;
-
     if (!username) {
+      if (svgIcon) svgIcon.style.display = "inline-flex";
       textSpan.textContent = isCompact ? "Login" : "Login with Twitch";
       return;
     }
+
+    if (svgIcon) svgIcon.style.display = "none";
 
     if (isCompact) {
       textSpan.textContent = "Login";
@@ -43,7 +46,7 @@ export function handleText() {
     }
   }
 
-  renderText();
+  render();
 
-  mq.addEventListener("change", renderText);
+  mq.addEventListener("change", render);
 }
