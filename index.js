@@ -111,7 +111,6 @@ app.get('/error', (req, res) => {
   });
 });
 
-// Twitch callback - получает код авторизации
 app.get('/auth/twitch/callback', async (req, res) => {
   try {
     const authCode = req.query.code;
@@ -125,9 +124,7 @@ app.get('/auth/twitch/callback', async (req, res) => {
 
     console.log('[info] Auth code received:'.green, authCode.substring(0, 10) + '...');
 
-    // Сразу обменять код на токен и получить данные пользователя
     try {
-      // Получить access token
       const tokenResponse = await axios.post(
         'https://id.twitch.tv/oauth2/token',
         new URLSearchParams({
@@ -147,7 +144,6 @@ app.get('/auth/twitch/callback', async (req, res) => {
       const accessToken = tokenResponse.data.access_token;
       console.log('[info] Access token received'.green);
 
-      // Получить данные пользователя
       const userResponse = await axios.get('https://api.twitch.tv/helix/users', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -158,7 +154,6 @@ app.get('/auth/twitch/callback', async (req, res) => {
       const userData = userResponse.data.data[0];
       console.log('[info] User data received:'.green, userData.login);
 
-      // Вернуть HTML который закроет popup и передаст данные
       return res.send(`
         <!DOCTYPE html>
         <html>
@@ -283,12 +278,10 @@ app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.resolve(publicPath, 'sitemap.xml'));
 });
 
-// 404 handler
 app.use((req, res) => {
   res.status(404).render('404');
 });
 
-// Error handler
 app.use((err, req, res, next) => {
   console.error(`[error] ${err.stack}`.red);
   res.status(err.status || 500).render('error', {
