@@ -31,8 +31,8 @@ export function handleText() {
         <img src="${profileImage}"
              alt="${username}"
              style="
-               width:20px;
-               height:20px;
+               width:30px;
+               height:30px;
                border-radius:50%;
                margin-right:6px;
                vertical-align:middle;
