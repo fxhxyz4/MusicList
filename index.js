@@ -278,9 +278,10 @@ app.get('/sitemap.xml', (req, res) => {
   res.sendFile(path.resolve(publicPath, 'sitemap.xml'));
 });
 
-app.get('/test-500', (req, res) => {
-  throw new Error('Test error');
-});
+// test path for design 500 page error
+// app.get('/test-500', (req, res) => {
+//   throw new Error('Test error');
+// });
 
 app.use((req, res) => {
   res.status(404).render('404');
