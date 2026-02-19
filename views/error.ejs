@@ -1,42 +1,460 @@
 <%
-  let title = `Server Error`;
+  let title = `500 — System Failure`;
   let css_dev_path = `../../public/styles/global.css`;
-	let css_prod_path = `../../public/styles/global.min.css?v1`;
-
+  let css_prod_path = `../../public/styles/global.min.css?v1`;
   let css_path = process.env.NODE_ENV === 'production'
     ? css_prod_path
     : css_dev_path;
-%>
 
+  let code = statusCode || 500;
+  let msg  = message   || `Internal Server Error`;
+
+  let traceLines = [
+    `KERNEL PANIC — not syncing`,
+    `at Object.<anonymous> (server.js:${Math.floor(Math.random()*300)+10}:${Math.floor(Math.random()*40)+1})`,
+    `at Module._compile (node:internal/modules/cjs/loader:1364:14)`,
+    `at Module.load (node:internal/modules/cjs/loader:1203:32)`,
+    `at Function.Module._load (node:internal/modules/cjs/loader:1019:12)`,
+    `at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:128:12)`,
+    `SIGABRT received — process terminated`,
+  ];
+
+  let timestamp = new Date().toISOString();
+  let buildId = Math.random().toString(36).slice(2,10).toUpperCase();
+%>
 <%- include(`./partials/doctype.ejs`) -%>
   <head>
     <meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="author" content="fxhxyz" />
-		<link type="image/x-icon" rel="shortcut icon" href="./public/images/favicon.ico" />
+    <link type="image/x-icon" rel="shortcut icon" href="./public/images/favicon.ico" />
     <meta name="format-detection" content="telephone=no" />
     <meta name="format-detection" content="address=no" />
     <meta name="darkreader" content="NO-DARKREADER-PLUGIN" />
-		<meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content="noindex, nofollow" />
     <link href="https://unpkg.com/modern-normalize@2.0.0/modern-normalize.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet" />
     <link type="text/css" rel="stylesheet" href="<%- css_path -%>" />
-    <title><%= title %></title>
+    <title><%- title -%></title>
+    <style>
+      :root {
+        --bg: #0a0a0a;
+        --panel: #111111;
+        --border: #1e1e1e;
+        --fg: #c8c8c8;
+        --fg-dim: #484848;
+        --accent: #ff4500;
+        --accent2: #ff8c00;
+        --green: #00ff88;
+        --mono: 'JetBrains Mono', monospace;
+      }
+
+      *, *::before, *::after { box-sizing: border-box; }
+
+      html, body {
+        min-height: 100%;
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: var(--mono);
+        font-size: 13px;
+        line-height: 1.6;
+      }
+
+      /* CRT flicker */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0,0,0,0.04) 0px,
+          rgba(0,0,0,0.04) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        pointer-events: none;
+        z-index: 1000;
+        animation: flicker 8s linear infinite;
+      }
+
+      @keyframes flicker {
+        0%, 97%, 99%, 100% { opacity: 1; }
+        98% { opacity: 0.85; }
+      }
+
+      .os {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Top bar */
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.6rem 1.5rem;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        animation: shake 0.15s ease 0.5s 3;
+      }
+
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-3px); }
+        75% { transform: translateX(3px); }
+      }
+
+      .topbar__code {
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+
+      .topbar__right {
+        opacity: 0.85;
+        font-weight: 300;
+      }
+
+      /* Main layout */
+      .content {
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 320px;
+        grid-template-rows: auto 1fr;
+        gap: 1px;
+        background: var(--border);
+        margin: 1px;
+      }
+
+      /* Hero panel */
+      .hero {
+        grid-row: 1 / 3;
+        background: var(--panel);
+        padding: 3rem 4rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        animation: panelIn 0.4s ease both;
+      }
+
+      @keyframes panelIn {
+        from { opacity: 0; transform: translateY(8px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Big code */
+      .hero__code {
+        font-size: clamp(80px, 14vw, 160px);
+        font-weight: 700;
+        line-height: 1;
+        color: var(--accent);
+        letter-spacing: -0.04em;
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: inline-block;
+        text-shadow: 0 0 60px rgba(255,69,0,0.3);
+        animation: codeIn 0.5s ease 0.2s both;
+      }
+
+      @keyframes codeIn {
+        from { opacity: 0; transform: scale(0.95); }
+        to   { opacity: 1; transform: scale(1); }
+      }
+
+      /* Strikethrough line */
+      .hero__code::after {
+        content: '';
+        position: absolute;
+        left: -4px;
+        right: -4px;
+        height: 4px;
+        background: var(--accent2);
+        top: 50%;
+        transform: scaleX(0);
+        transform-origin: left;
+        animation: strikeIn 0.4s ease 0.8s both;
+      }
+
+      @keyframes strikeIn {
+        to { transform: scaleX(1); }
+      }
+
+      .hero__msg {
+        font-size: clamp(18px, 3vw, 28px);
+        font-weight: 300;
+        color: var(--fg);
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.01em;
+        animation: panelIn 0.4s ease 0.35s both;
+      }
+
+      .hero__sub {
+        font-size: 12px;
+        color: var(--fg-dim);
+        letter-spacing: 0.05em;
+        margin-bottom: 3rem;
+        animation: panelIn 0.4s ease 0.45s both;
+      }
+
+      .hero__actions {
+        display: flex;
+        gap: 1rem;
+        animation: panelIn 0.4s ease 0.55s both;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-family: var(--mono);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        text-decoration: none;
+        padding: 0.75rem 1.75rem;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .btn--primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+
+      .btn--primary:hover {
+        background: var(--accent2);
+        border-color: var(--accent2);
+      }
+
+      .btn--ghost {
+        background: transparent;
+        color: var(--fg-dim);
+        border-color: var(--border);
+      }
+
+      .btn--ghost:hover {
+        color: var(--fg);
+        border-color: var(--fg-dim);
+      }
+
+      /* Decorative corner marks */
+      .hero::before {
+        content: '';
+        position: absolute;
+        bottom: -1px;
+        right: -1px;
+        width: 80px;
+        height: 80px;
+        background:
+          linear-gradient(to top left, var(--accent) 0%, var(--accent) 2px, transparent 2px) no-repeat bottom right / 100% 100%;
+        opacity: 0.4;
+      }
+
+      /* Stack trace panel */
+      .trace {
+        background: var(--panel);
+        padding: 1.5rem;
+        overflow: hidden;
+        animation: panelIn 0.4s ease 0.1s both;
+      }
+
+      .trace__label {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--accent2);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .trace__label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .trace__lines {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .trace__line {
+        padding: 0.25rem 0;
+        font-size: 11px;
+        color: var(--fg-dim);
+        border-bottom: 1px solid var(--border);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        animation: typeIn 0.3s ease both;
+      }
+
+      <% traceLines.forEach(function(line, i) { %>
+      .trace__line--<%= i %> { animation-delay: <%= 0.6 + i * 0.07 %>s; color: <%= i === 0 || i === traceLines.length - 1 ? 'var(--accent)' : 'var(--fg-dim)' %>; }
+      <% }) %>
+
+      .trace__line::before {
+        content: counter(line) '  ';
+        counter-increment: line;
+        color: var(--border);
+      }
+
+      .trace__lines {
+        counter-reset: line;
+      }
+
+      @keyframes typeIn {
+        from { opacity: 0; transform: translateX(-6px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+
+      /* Info panel */
+      .info {
+        background: var(--panel);
+        padding: 1.5rem;
+        animation: panelIn 0.4s ease 0.2s both;
+      }
+
+      .info__label {
+        font-size: 10px;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--green);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .info__label::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      .info__row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.4rem 0;
+        font-size: 11px;
+        border-bottom: 1px solid var(--border);
+        gap: 1rem;
+      }
+
+      .info__key { color: var(--fg-dim); flex-shrink: 0; }
+      .info__val { color: var(--fg); text-align: right; word-break: break-all; }
+      .info__val--warn { color: var(--accent); }
+      .info__val--ok   { color: var(--green); }
+
+      /* Bottom bar */
+      .bottombar {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 1.5rem;
+        font-size: 10px;
+        color: var(--fg-dim);
+        letter-spacing: 0.1em;
+        border-top: 1px solid var(--border);
+      }
+
+      .bottombar__blink {
+        animation: blink 1s step-end infinite;
+        color: var(--accent);
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+    </style>
   </head>
-	<body class="page">
+  <body class="page">
     <%- include(`./partials/noscript.ejs`) -%>
-		<div class="wrapper page__wrap">
-			<%- include(`./partials/header.ejs`) -%>
-			<main class="main">
-        <div class="error">
+
+    <div class="os">
+      <div class="topbar">
+        <span>⚠ FATAL ERROR — PROCESS CRASHED</span>
+        <span class="topbar__code"><%- code %></span>
+        <span class="topbar__right">BUILD <%- buildId %></span>
+      </div>
+
+      <div class="content">
+
+        <!-- Hero -->
+        <div class="hero">
+          <div class="hero__code"><%- code %></div>
           <% if (statusCode && message) { %>
-            <h1 class="error__title"><%= statusCode %></h1>
-            <p class="error__text"><%= message %></p>
+            <div class="hero__msg"><%- msg %></div>
+            <div class="hero__sub">The server encountered an unexpected condition.</div>
+          <% } else { %>
+            <div class="hero__msg">Internal Server Error</div>
+            <div class="hero__sub">The server encountered an unexpected condition.</div>
           <% } %>
+          <div class="hero__actions">
+            <a href="/" class="btn btn--primary">↩ Return home</a>
+            <a href="javascript:location.reload()" class="btn btn--ghost">↻ Retry</a>
+          </div>
         </div>
-      </main>
-			<%- include(`./partials/footer.ejs`) -%>
-		</div>
+
+        <!-- Stack trace -->
+        <div class="trace">
+          <div class="trace__label">Stack Trace</div>
+          <ul class="trace__lines">
+            <% traceLines.forEach(function(line, i) { %>
+              <li class="trace__line trace__line--<%= i %>"><%- line %></li>
+            <% }) %>
+          </ul>
+        </div>
+
+        <!-- Info -->
+        <div class="info">
+          <div class="info__label">Diagnostics</div>
+
+          <%
+            let infoRows = [
+              { key: 'Status',    val: code,                         cls: 'warn' },
+              { key: 'Method',    val: 'GET',                        cls: '' },
+              { key: 'Timestamp', val: timestamp,                    cls: '' },
+              { key: 'Build',     val: buildId,                      cls: '' },
+              { key: 'Env',       val: process.env.NODE_ENV || 'development', cls: process.env.NODE_ENV === 'production' ? 'ok' : 'warn' },
+              { key: 'Runtime',   val: 'Node.js ' + process.version, cls: 'ok' },
+            ];
+          %>
+
+          <% infoRows.forEach(function(row) { %>
+            <div class="info__row">
+              <span class="info__key"><%- row.key %></span>
+              <span class="info__val<%= row.cls ? ' info__val--' + row.cls : '' %>"><%- row.val %></span>
+            </div>
+          <% }) %>
+        </div>
+
+      </div>
+
+      <div class="bottombar">
+        <span class="bottombar__blink">█</span>
+        <span><%- timestamp %></span>
+        <span>ERR_HTTP_<%- code %></span>
+      </div>
+    </div>
+
     <%- include('./partials/script.ejs') -%>
-	</body>
+  </body>
 </html>
