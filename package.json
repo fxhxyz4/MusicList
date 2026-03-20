@@ -46,16 +46,15 @@
     "webpack:prod": "webpack -c ./webpack.config.js"
   },
   "dependencies": {
-    "axios": "^1.10.0",
+    "axios": "^1.13.6",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "css-minify": "^2.0.0",
     "dotenv": "^17.0.0",
-    "ejs": "^4.0.1",
+    "ejs": "^5.0.1",
     "express": "^4.21.2",
-    "colors": "^1.4.0",
-    "morgan": "^1.10.0",
-    "express-session": "^1.18.1"
+    "express-session": "^1.18.1",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.27.2",
@@ -65,7 +64,7 @@
     "babel-minify": "^0.5.2",
     "nodemon": "^3.1.10",
     "webpack": "^5.99.9",
-    "webpack-cli": "^6.0.1"
+    "webpack-cli": "^7.0.2"
   },
   "engines": {
     "node": "22.x"
