@@ -57,7 +57,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.27.2",
+    "@babel/cli": "^8.0.4",
     "@babel/core": "^7.27.7",
     "@babel/preset-env": "^7.27.2",
     "@fxhxyz/prettier-config": "^2.0.8",
